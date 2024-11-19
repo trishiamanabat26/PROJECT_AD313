@@ -2,32 +2,20 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from './pages/Main/Main';
 import Home from './pages/Main/Movie/Home/Home';
-import MovieContextProvider from './context/MovieContext';
 import View from './pages/Main/Movie/View/View';
 import Login from './pages/Public/Login/Login';
 import Register from './pages/Public/Register/Register';
+import MovieContextProvider from './context/MovieContext';
 
 const router = createBrowserRouter([
+  { path: '/', element: <Login /> }, // Login route
+  { path: '/register', element: <Register /> }, // Registration route
   {
-    path: '/',
-    element: <Login />, // Login page is the first thing users will see
-  },
-  {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/main', // Main page path
-    element: <Main />,
+    path: '/main',
+    element: <Main />, // Main layout
     children: [
-      {
-        path: '/main', // Home page route
-        element: <Home />,
-      },
-      {
-        path: '/main/view/:movieId', // Movie detail page route with dynamic movieId
-        element: <View />,
-      },
+      { path: '', element: <Home /> }, // "/main" -> Home
+      { path: 'view/:movieId', element: <View /> }, // "/main/view/:movieId" -> View movie details
     ],
   },
 ]);

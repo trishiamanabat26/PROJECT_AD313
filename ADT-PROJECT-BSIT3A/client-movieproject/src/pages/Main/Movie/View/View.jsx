@@ -1,64 +1,38 @@
-import { useEffect } from 'react';
-import { useMovieContext } from '../../../../context/MovieContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useMovieContext } from '../../../../context/MovieContext';
 import axios from 'axios';
 
-function View() {
-  const { movie, setMovie } = useMovieContext();
-
-  const { movieId } = useParams();
-  const navigate = useNavigate();
+const View = () => {
+  const { movieId } = useParams(); 
+  const navigate = useNavigate(); 
+  const [movie, setMovie] = useState(null);
+  const { setMovie: setContextMovie } = useMovieContext();
 
   useEffect(() => {
-    if (movieId !== undefined) {
-      axios
-        .get(`/movies/${movieId}`)
-        .then((response) => {
-          setMovie(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-          navigate('/');
-        });
-    }
-    return () => {};
-  }, [movieId]);
+    axios
+      .get(`/movies/${movieId}`)
+      .then((response) => {
+        setMovie(response.data);
+        setContextMovie(response.data); 
+      })
+      .catch((e) => console.error('Error fetching movie details:', e));
+  }, [movieId, setContextMovie]);
+
   return (
-    <>
-      {movie && (
-        <>
-          <div>
-            <div className='banner'>
-              <h1>{movie.title}</h1>
-            </div>
-            <h3>{movie.overview}</h3>
-            {JSON.stringify(movie)}
-          </div>
-
-          {movie.casts && movie.casts.length && (
-            <div>
-              <h1>Cast & Crew</h1>
-              {JSON.stringify(movie.casts)}
-            </div>
-          )}
-
-          {movie.videos && movie.videos.length && (
-            <div>
-              <h1>Videos</h1>
-              {JSON.stringify(movie.videos)}
-            </div>
-          )}
-
-          {movie.photos && movie.photos.length && (
-            <div>
-              <h1>Photos</h1>
-              {JSON.stringify(movie.photos)}
-            </div>
-          )}
-        </>
+    <div className="movie-details">
+      <button onClick={() => navigate('/main')}>Back to Home</button>
+      {movie ? (
+        <div>
+          <h1>{movie.title}</h1>
+          <img src={movie.posterPath} alt={movie.title} />
+          <p>{movie.description}</p>
+        </div>
+      ) : (
+        <p>Loading movie details...</p>
       )}
-    </>
+    </div>
   );
-}
+};
 
 export default View;

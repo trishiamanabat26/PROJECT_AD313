@@ -5,18 +5,15 @@ import './Main.css';
 function Main() {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    navigate('/');  // Redirect to Login page after logout
+    navigate('/'); // Redirect to Login page
   };
 
   useEffect(() => {
-    if (
-      accessToken === undefined ||
-      accessToken === '' ||
-      accessToken === null
-    ) {
-      navigate('/');  // If no accessToken, redirect to Login page
+    if (!accessToken) {
+      navigate('/'); // Redirect to Login if not authenticated
     }
   }, [accessToken, navigate]);
 
@@ -27,12 +24,10 @@ function Main() {
           <ul>
             <li>
               <a
-                onClick={() => {
-                  if (accessToken) {
-                    navigate('/main'); // If logged in, go to main
-                  } else {
-                    navigate('/'); // If not logged in, go to Login page
-                  }
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/main'); // Navigate to Home
                 }}
               >
                 Movies
@@ -40,17 +35,33 @@ function Main() {
             </li>
             {accessToken ? (
               <li className="logout">
-                <a onClick={handleLogout}>Logout</a>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLogout(); // Logout action
+                  }}
+                >
+                  Logout
+                </a>
               </li>
             ) : (
               <li className="login">
-                <a onClick={() => navigate('/')}>Login</a>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/'); // Navigate to Login
+                  }}
+                >
+                  Login
+                </a>
               </li>
             )}
           </ul>
         </div>
         <div className="outlet">
-          <Outlet />
+          <Outlet /> {/* Renders child routes */}
         </div>
       </div>
     </div>
