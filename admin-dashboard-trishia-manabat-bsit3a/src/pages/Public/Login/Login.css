@@ -1,0 +1,120 @@
+/* Main container for centering the form */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #a3c8fc, #f0f4f8);
+}
+
+/* Form container */
+.form-container {
+  padding: 3rem 2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.form-container:hover {
+  transform: scale(1.05);
+}
+
+.form-container > div {
+  margin-bottom: 16px;
+}
+
+
+.form-group label {
+  width: 100%;
+  margin-bottom: 6px;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #555;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #4caf50; 
+  outline: none;
+}
+
+
+.login.errors {
+  margin-bottom: 1rem;
+}
+
+.errors {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 0.5rem;
+}
+
+
+.submit-container {
+  margin-top: 20px;
+}
+
+.submit-container button {
+  background-color: #4caf50; 
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-container button:hover {
+  background-color: #45a049; 
+  transform: translateY(-2px); 
+}
+
+.submit-container button:active {
+  background-color: #3e8e41; 
+  transform: translateY(1px); 
+}
+
+
+.register-container {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.register-container a {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+.register-container a:hover {
+  text-decoration: underline;
+}
+
+
+.show-password {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.show-password:hover {
+  color: #4caf50; 
+}
