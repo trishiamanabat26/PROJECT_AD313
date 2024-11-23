@@ -1,75 +1,44 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom/client';
+import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import Login from './pages/Public/Login/Login';
-import Dashboard from './pages/Main/Dashboard/Dashboard';
 import Main from './pages/Main/Main';
 import Movie from './pages/Main/Movie/Movie';
 import Lists from './pages/Main/Movie/Lists/Lists';
 import Form from './pages/Main/Movie/Form/Form';
 import Register from './pages/Public/Register/Register';
+import CastAndCrews from './pages/Main/CastAndCrews/CastAndCrews'; // Correct import path
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Login />,
   },
-
   {
-    path: '/Register', // Add the Register route
+    path: '/Register', // Register route
     element: <Register />,
   },
   {
     path: '/main',
     element: <Main />,
     children: [
-      //Temporarily disabled the dashboard route
-      // {
-      //   path: '/main/dashboard',
-      //   element: <Dashboard />,
-      // },
       {
-        path: '/main/movies',
+        path: 'movies', // Relative path to '/main/movies'
         element: <Movie />,
         children: [
           {
-            path: '/main/movies',
+            path: '', // Default path for '/main/movies'
             element: <Lists />,
           },
           {
-            path: '/main/movies/form/:movieId?',
+            path: 'form/:movieId?', // Use relative path for the form
             element: <Form />,
-            children: [
-              {
-                path: '/main/movies/form/:movieId',
-                element: (
-                  <h1>Change this for cast & crew CRUD functionality.</h1>
-                ),
-              },
-              {
-                path: '/main/movies/form/:movieId/cast-and-crews',
-                element: (
-                  <h1>
-                    Change this for cast & crew CRUD functionality component.
-                  </h1>
-                ),
-              },
-              {
-                path: '/main/movies/form/:movieId/photos',
-                element: (
-                  <h1>Change this for photos CRUD functionality component.</h1>
-                ),
-              },
-              {
-                path: '/main/movies/form/:movieId/videos',
-                element: (
-                  <h1>Change this for videos CRUD functionality component.</h1>
-                ),
-              },
-            ],
           },
         ],
+      },
+      {
+        path: 'cast', // Relative path to '/main/cast'
+        element: <CastAndCrews />, // Render the CastAndCrews component
       },
     ],
   },
@@ -77,7 +46,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <RouterProvider router={router} />
     </div>
   );
