@@ -1,0 +1,80 @@
+/* Main Layout Styles */
+.Main {
+  display: flex;
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.Main .container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Main .container .outlet {
+  flex-grow: 1; /* Adjusted for consistent layout */
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.Main .container .navigation {
+  height: 80px;
+  background-color: #15171b;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Allows dynamic space between elements */
+  align-items: center;
+  padding: 0 20px;
+}
+
+.Main .container .navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.Main .container .navigation ul li {
+  padding: 0 30px; /* Adjusted padding for better alignment */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #61dafb;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+.Main .container .navigation ul li a {
+  text-decoration: none;
+  color: inherit; /* Inherit color from parent li */
+}
+
+.Main .container .navigation ul li.active a,
+.Main .container .navigation ul li:hover a {
+  text-decoration: none;
+  color: white;
+}
+
+.Main .container .navigation ul li.active,
+.Main .container .navigation ul li:hover {
+  background: #353a43; /* Hover effect background */
+}
+
+.Main .container .navigation ul li.logout,
+.Main .container .navigation ul li.login {
+  cursor: pointer;
+  justify-self: end;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Main .container .navigation {
+    padding: 0 10px; /* Adjust navigation padding on smaller screens */
+  }
+  
+  .Main .container .navigation ul li {
+    padding: 0 20px; /* Adjust padding on smaller screens */
+  }
+}
