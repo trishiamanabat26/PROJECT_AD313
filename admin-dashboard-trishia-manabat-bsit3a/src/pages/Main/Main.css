@@ -1,0 +1,178 @@
+/* Cinematic Sidebar Design */
+.Main {
+  display: flex;
+  overflow: hidden;
+  max-height: 100vh;
+  background: linear-gradient(135deg, #121212, #1a1a2e);
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+.Main .container {
+  display: flex;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.Main .container .outlet {
+  flex-grow: 3;
+  padding: 2rem;
+  background: linear-gradient(to right, #1e1e2f, #16213e);
+  min-height: 100vh;
+  box-shadow: -10px 0 20px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  color: #ffffff;
+}
+
+.Main .container .navigation {
+  width: 300px;
+  background: linear-gradient(225deg, #0f0f1a, #1a1a2e);
+  color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.5);
+  border-right: 2px solid #e94560;
+}
+
+/* Logo and Branding */
+.Main .container .navigation .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+}
+
+.Main .container .navigation .logo img {
+  max-width: 150px;
+  filter: brightness(1.2) contrast(1.2);
+}
+
+.Main .container .navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Main .container .navigation ul li {
+  position: relative;
+  padding: 15px 30px;
+  font-size: 18px;
+  text-align: left;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.Main .container .navigation ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.Main .container .navigation ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: color 0.3s ease;
+}
+
+.Main .container .navigation ul li svg {
+  width: 24px;
+  height: 24px;
+  color: #e94560;
+  transition: transform 0.3s ease;
+}
+
+.Main .container .navigation ul li:hover,
+.Main .container .navigation ul li.active {
+  background-color: rgba(233, 69, 96, 0.1);
+}
+
+.Main .container .navigation ul li:hover::before,
+.Main .container .navigation ul li.active::before {
+  background-color: #e94560;
+}
+
+.Main .container .navigation ul li:hover svg,
+.Main .container .navigation ul li.active svg {
+  transform: scale(1.2);
+  color: #ffffff;
+}
+
+.Main .container .navigation ul li.logout {
+  margin-top: auto;
+  border-top: 1px solid rgba(233, 69, 96, 0.2);
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.Main .container .navigation ul li.logout:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.Main .container .navigation ul li.logout svg {
+  color: #ff4d4d;
+}
+
+.Main .container .navigation ul li.active {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Main .container {
+    flex-direction: column;
+  }
+
+  .Main .container .navigation {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .Main .container .navigation .logo {
+    display: none;
+  }
+
+  .Main .container .navigation ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .Main .container .navigation ul li {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .Main .container .outlet {
+    padding: 1rem;
+  }
+}
+
+/* Scrollbar Styling */
+.Main .container .navigation::-webkit-scrollbar {
+  width: 8px;
+}
+
+.Main .container .navigation::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+.Main .container .navigation::-webkit-scrollbar-thumb {
+  background-color: #e94560;
+  border-radius: 4px;
+}
