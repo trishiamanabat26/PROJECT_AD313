@@ -1,64 +1,110 @@
-
+/* Page Title */
 .page-title {
-  font-size: 4.5rem;
-  margin: 2rem 0; 
+  font-size: 5rem; /* Larger title for cinematic impact */
+  margin: 3rem 0;
   text-align: center;
+  color: #ffab00; /* Gold color for dramatic effect */
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); /* Slight shadow for text depth */
+  font-family: 'Georgia', serif; /* Elegant font for cinematic feel */
 }
 
-
-.list-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center; 
-  padding: 0 1rem; 
-}
-
-
+/* Featured List Container */
 .featured-list-container {
   width: 100%;
+  height: 80vh; /* Increased height for a more immersive cinematic effect */
   margin-bottom: 5rem;
-  aspect-ratio: 16 / 9; 
-  position: relative; 
+  position: relative;
+  overflow: hidden; /* Ensures everything stays within the bounds */
+  border-radius: 10px; /* Rounded corners for a soft cinematic look */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); /* Add deep shadow for emphasis */
+  margin-top: 5rem; /* Adds spacing above the featured section */
 }
 
-
+/* Featured Backdrop */
 .featured-backdrop {
   width: 100%;
   height: 100%;
-  background-size: cover !important;
-  background-position: center center;
+  background-size: cover !important; /* Ensures the image covers the full container */
+  background-position: center center; /* Centers the image for best visual */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
   display: flex;
   align-items: flex-end;
-  justify-content: center; 
+  justify-content: center;
   padding: 0 1rem;
+  position: relative;
+  filter: brightness(0.5); /* Slight darkening for a moody cinematic effect */
+  border-radius: 10px;
+  transition: filter 0.3s ease-in-out; /* Smooth filter transition */
 }
 
+.featured-backdrop:hover {
+  filter: brightness(0.7); /* Slightly brighten on hover */
+}
 
+/* Featured Movie Title */
 .featured-movie-title {
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 5rem; /* Increased font size for better visibility */
   color: white;
   width: 100%;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for contrast */
   text-align: center;
   position: absolute;
-  bottom: 10px; 
+  bottom: 20px;
   left: 0;
   right: 0;
+  text-transform: uppercase; /* For a more impactful cinematic title */
+  letter-spacing: 2px; /* Spacing for added drama */
+  font-family: 'Arial', sans-serif; /* A more modern font for the movie title */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Adding depth with subtle shadows */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Adds more contrast for readability */
 }
 
-
+/* Movie Poster Styling */
 .movie-poster {
-  width: 50px; 
-  height: 100px; 
-  object-fit: cover; 
+  width: 140px; /* Increased size for better visibility */
+  height: 210px;
+  object-fit: cover;
   border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Soft shadow around posters */
+  margin: 0.5rem;
 }
-
 
 .movie-poster:hover {
-  transform: scale(1.05); 
-  transition: transform 0.3s ease-in-out; 
+  transform: scale(1.1); /* Slight zoom effect for better interactivity */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8); /* Deep shadow on hover for emphasis */
+}
+
+/* List Container */
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 0 1rem;
+  margin-top: 3rem; /* Added top margin for spacing */
+  overflow-x: auto; /* Horizontal scrolling */
+  padding-bottom: 1rem;
+  max-height: 500px;
+}
+
+/* Smooth Scroll Effect for Lists */
+.list-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ffab00 #121212;
+}
+
+.list-container::-webkit-scrollbar {
+  height: 8px; /* Vertical scrollbar styling */
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background-color: #ffab00;
+  border-radius: 5px;
+}
+
+.list-container::-webkit-scrollbar-track {
+  background-color: #121212;
 }
