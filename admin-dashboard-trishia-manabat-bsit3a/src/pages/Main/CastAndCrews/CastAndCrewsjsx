@@ -1,0 +1,125 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importing useNavigate from react-router-dom
+import './CastAndCrews.css';
+
+const CastAndCrews = () => {
+  const [castProfiles, setCastProfiles] = useState([]);
+  const [profileLink, setProfileLink] = useState('');
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  useEffect(() => {
+    // Fetch existing cast profiles
+    fetchCastProfiles();
+  }, []);
+
+  const fetchCastProfiles = async () => {
+    setIsLoading(true);
+    try {
+      // Fetch cast profiles from the server (you may fetch them from your own server if using a backend)
+      const response = await axios.get('/api/castProfiles'); // Replace with your backend API endpoint
+      setCastProfiles(response.data);
+    } catch (err) {
+      setError('Error fetching cast profiles');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAddProfile = async () => {
+    if (!profileLink || !description) {
+      setError('Both Profile Link and Description are required');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const data = { profileLink, description };
+      // Assuming you're saving this data to your server
+      await axios.post('/api/castProfiles', data); // Replace with your backend endpoint
+      fetchCastProfiles();
+      setProfileLink('');
+      setDescription('');
+    } catch (err) {
+      setError('Error adding profile');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEditProfile = async (id) => {
+    const newDescription = prompt('Enter new description');
+    if (!newDescription) return;
+
+    setIsLoading(true);
+    try {
+      await axios.patch(`/api/castProfiles/${id}`, { description: newDescription }); // Replace with your backend API endpoint
+      fetchCastProfiles();
+    } catch (err) {
+      setError('Error updating profile');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteProfile = async (id) => {
+    if (window.confirm('Are you sure you want to delete this profile?')) {
+      setIsLoading(true);
+      try {
+        await axios.delete(`/api/castProfiles/${id}`); // Replace with your backend API endpoint
+        fetchCastProfiles();
+      } catch (err) {
+        setError('Error deleting profile');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  return (
+    <div className="cast">
+      <h1>Cast & Crew</h1>
+      {error && <div className="error">{error}</div>}
+      {isLoading && <div className="loading">Loading...</div>}
+
+      <div className="add-profile-form">
+        <input
+          type="text"
+          placeholder="Profile Link (TMDB ID)"
+          value={profileLink}
+          onChange={(e) => setProfileLink(e.target.value)}
+        />
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <button onClick={handleAddProfile}>Add Cast Profile</button>
+      </div>
+
+      <div className="cast-profile-list">
+        <h2>Existing Cast Profiles</h2>
+        {castProfiles.map((profile) => (
+          <div key={profile.id} className="cast-profile">
+            <h3>{profile.name}</h3>
+            <a href={`https://www.themoviedb.org/person/${profile.tmdbId}`} target="_blank" rel="noopener noreferrer">
+              {profile.tmdbId} - View Profile on TMDB
+            </a>
+            <p>{profile.description}</p>
+            <button onClick={() => handleEditProfile(profile.id)}>Edit</button>
+            <button onClick={() => handleDeleteProfile(profile.id)}>Delete</button>
+          </div>
+        ))}
+      </div>
+
+      {/* Back Button */}
+      <button onClick={() => navigate(-1)} className="back-button">Back</button> {/* This button will take the user to the previous page */}
+    </div>
+  );
+};
+
+export default CastAndCrews;
