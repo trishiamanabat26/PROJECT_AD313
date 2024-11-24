@@ -1,81 +1,325 @@
+/* Modern Container Styling */
 .lists-container {
-  padding: 20px;
+  padding: 32px;
+  background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
 }
 
+/* Create Button Styling */
 .create-container {
-  margin-bottom: 15px;
+  margin-bottom: 28px;
   text-align: right;
 }
 
 .create-button {
-  padding: 10px 15px;
-  background-color: #4caf50;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, #ff4081, #c51162);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 20px rgba(255, 64, 129, 0.3);
 }
 
 .create-button:hover {
-  background-color: #45a049;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(255, 64, 129, 0.4);
 }
 
+.create-button:active {
+  transform: translateY(1px);
+}
+
+/* Table Container Styling */
 .table-container {
   overflow-x: auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
+/* Movie Lists Table Styling */
 .movie-lists {
   width: 100%;
-  border-collapse: collapse;
-}
-
-.movie-lists th,
-.movie-lists td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  font-size: 1rem;
+  color: #ffffff;
 }
 
 .movie-lists th {
-  background-color: #f4f4f4;
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+  color: white;
+  font-weight: 600;
+  padding: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
 }
 
+.movie-lists td {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.movie-lists tr {
+  transition: all 0.3s ease;
+}
+
+.movie-lists tr:hover td {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Action Buttons Styling */
 .edit-button,
 .delete-button {
-  padding: 5px 10px;
-  margin: 0 5px;
+  padding: 12px 24px;
+  margin: 0 8px;
   border: none;
-  border-radius: 3px;
+  border-radius: 50px;
   cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .edit-button {
-  background-color: #2196f3;
+  background: linear-gradient(135deg, #00bcd4, #0097a7);
   color: white;
+  box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
 }
 
 .edit-button:hover {
-  background-color: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 188, 212, 0.4);
 }
 
 .delete-button {
-  background-color: #f44336;
+  background: linear-gradient(135deg, #ff5252, #d32f2f);
   color: white;
+  box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
 }
 
 .delete-button:hover {
-  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 82, 82, 0.4);
 }
 
+/* Status Messages Styling */
 .loading-text,
 .error-text,
 .no-data-text {
   text-align: center;
   font-size: 1.2em;
-  color: #555;
+  padding: 32px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  margin: 24px 0;
 }
 
-.movie-lists tr:hover {
-  background-color: #d1ffd1;
-  color: #333; 
+.loading-text {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
 }
+
+.error-text {
+  background: rgba(255, 82, 82, 0.1);
+  color: #ff5252;
+}
+
+.no-data-text {
+  background: rgba(255, 255, 255, 0.05);
+  color: #bdbdbd;
+}
+
+/* Movie Rating Stars */
+.rating {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+/* Custom Scrollbar */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff4081, #c51162);
+  border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .lists-container {
+    padding: 20px;
+  }
+  
+  .create-button {
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+  
+  .movie-lists th,
+  .movie-lists td {
+    padding: 16px;
+  }
+  
+  .edit-button,
+  .delete-button {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lists-container {
+    padding: 16px;
+  }
+  
+  .create-button {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .movie-lists th,
+  .movie-lists td {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+  
+  .edit-button,
+  .delete-button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    margin: 4px;
+  }
+}
+/* Previous styles remain the same until the action buttons section */
+
+/* Action Column Styling */
+.actions-cell {
+  white-space: nowrap;
+  text-align: center;
+  min-width: 200px;
+  width: 200px;
+  padding: 16px !important;
+}
+
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Action Buttons Styling */
+.edit-button,
+.delete-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex: 1;
+  min-width: 85px;
+  max-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.edit-button {
+  background: linear-gradient(135deg, #00bcd4, #0097a7);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+}
+
+.edit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 188, 212, 0.4);
+}
+
+.delete-button {
+  background: linear-gradient(135deg, #ff5252, #d32f2f);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+}
+
+.delete-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 82, 82, 0.4);
+}
+
+/* Button Icons */
+.button-icon {
+  font-size: 1rem;
+}
+
+/* Responsive Design for Actions */
+@media (max-width: 768px) {
+  .actions-cell {
+    min-width: 180px;
+    width: 180px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 75px;
+  }
+}
+
+@media (max-width: 480px) {
+  .actions-cell {
+    min-width: 160px;
+    width: 160px;
+  }
+
+  .action-buttons {
+    gap: 6px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+
+  .button-icon {
+    font-size: 0.9rem;
+  }
+}
+
+/* Rest of the previous styles remain the same */

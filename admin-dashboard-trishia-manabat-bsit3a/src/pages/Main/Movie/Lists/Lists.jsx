@@ -6,10 +6,11 @@ import axios from 'axios';
 const Lists = () => {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
-  
+
   const [lists, setLists] = useState([]); // Full list of movies
   const [filteredLists, setFilteredLists] = useState([]); // Filtered movies for display
   const [searchTerm, setSearchTerm] = useState(''); // Search term input
+  const [editMessage, setEditMessage] = useState(''); // State to show edit message
 
   // Fetch movies from API
   const getMovies = () => {
@@ -68,6 +69,16 @@ const Lists = () => {
     }
   };
 
+  // Handle edit button click
+  const handleEditClick = (movieId) => {
+    setEditMessage('You are about to edit this movie. Please wait...');
+    
+    // Delay navigation to show message for a moment
+    setTimeout(() => {
+      navigate('/main/movies/form/' + movieId);
+    }, 1500); // Show the message for 1.5 seconds before navigating
+  };
+
   return (
     <div className='lists-container'>
       <div className='create-container'>
@@ -91,6 +102,13 @@ const Lists = () => {
         />
       </div>
 
+      {/* Edit Message Display */}
+      {editMessage && (
+        <div className="edit-message">
+          <p>{editMessage}</p>
+        </div>
+      )}
+
       <div className='table-container'>
         <table className='movie-lists'>
           <thead>
@@ -109,7 +127,7 @@ const Lists = () => {
                   <td>
                     <button
                       type='button'
-                      onClick={() => navigate('/main/movies/form/' + movie.id)}
+                      onClick={() => handleEditClick(movie.id)}
                       className='edit-button'
                     >
                       Edit

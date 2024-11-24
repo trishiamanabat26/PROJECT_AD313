@@ -4,9 +4,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Form.css";
 
 const Form = () => {
-  const [query, setQuery] = useState(""); // Search query
-  const [searchedMovieList, setSearchedMovieList] = useState([]); // Searched movies
-  const [selectedMovie, setSelectedMovie] = useState(undefined); // Selected movie
+  const [query, setQuery] = useState("");
+  const [searchedMovieList, setSearchedMovieList] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(undefined);
+  const [movie, setMovie] = useState(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [formData, setFormData] = useState({
     title: "",
     overview: "",
@@ -16,13 +19,10 @@ const Form = () => {
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); // For pagination
-  const [totalPages, setTotalPages] = useState(0); // For pagination
 
   let { movieId } = useParams();
   const navigate = useNavigate();
 
-  // Handles searching for movies
   const handleSearch = useCallback(() => {
     setError("");
     if (!query) {
@@ -64,7 +64,6 @@ const Form = () => {
     }
   }, [currentPage, handleSearch]);
 
-  // Handles selecting a movie from the search results
   const handleSelectMovie = (movie) => {
     setSelectedMovie(movie);
     setFormData({
@@ -77,7 +76,6 @@ const Form = () => {
     setError("");
   };
 
-  // Handles input changes in the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -87,7 +85,6 @@ const Form = () => {
     setError("");
   };
 
-  // Handles key press (Enter) for search
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -96,7 +93,6 @@ const Form = () => {
     }
   };
 
-  // Form validation
   const validateForm = () => {
     const errors = [];
     if (!formData.title) errors.push("Title is required");
@@ -108,7 +104,6 @@ const Form = () => {
     return errors;
   };
 
-  // Handles saving or updating the movie
   const handleSave = async () => {
     const validationErrors = validateForm();
     if (validationErrors.length > 0) {
@@ -157,7 +152,8 @@ const Form = () => {
     }
   };
 
-  // Fetch movie details for editing if movieId exists
+  const handleUpdate = handleSave;
+
   useEffect(() => {
     if (movieId) {
       setIsLoading(true);
@@ -166,7 +162,17 @@ const Form = () => {
       axios
         .get(`/movies/${movieId}`)
         .then((response) => {
-          setSelectedMovie(response.data);
+          setMovie(response.data);
+          const tempData = {
+            id: response.data.tmdbId,
+            original_title: response.data.title,
+            overview: response.data.overview,
+            popularity: response.data.popularity,
+            poster_path: response.data.posterPath.replace("https://image.tmdb.org/t/p/original/", ""),
+            release_date: response.data.releaseDate,
+            vote_average: response.data.voteAverage,
+          };
+          setSelectedMovie(tempData);
           setFormData({
             title: response.data.title,
             overview: response.data.overview,
@@ -187,74 +193,70 @@ const Form = () => {
   return (
     <>
       <h1>{movieId !== undefined ? "Edit" : "Create"} Movie</h1>
+      
       {error && <div className="error-message">{error}</div>}
       {isLoading && <div className="loading-message">Loading...</div>}
 
-      {/* Back Button */}
-      <button onClick={() => navigate(-1)} disabled={isLoading}>
-        Back
-      </button>
-
-      {/* Movie Search Section */}
       {movieId === undefined && (
-        <div className="search-container">
-          Search Movie:{" "}
-          <input
-            type="text"
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
-              setError("");
-            }}
-            onKeyPress={handleKeyPress}
-            placeholder="Enter movie title..."
-            disabled={isLoading}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              setCurrentPage(1);
-              handleSearch();
-            }}
-            disabled={isLoading || !query.trim()}
-          >
-            {isLoading ? "Searching..." : "Search"}
-          </button>
-          <div className="searched-movie">
-            {searchedMovieList.map((movie) => (
-              <p
-                key={movie.id}
-                onClick={() => handleSelectMovie(movie)}
-                className={selectedMovie?.id === movie.id ? "selected" : ""}
-              >
-                {movie.original_title}
-              </p>
-            ))}
-          </div>
-          {totalPages > 1 && (
-            <div className="pagination">
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-                disabled={currentPage === 1 || isLoading}
-              >
-                Previous
-              </button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages || isLoading}
-              >
-                Next
-              </button>
+        <>
+          <div className="search-container">
+            Search Movie:{" "}
+            <input
+              type="text"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setError("");
+              }}
+              onKeyPress={handleKeyPress}
+              placeholder="Enter movie title..."
+              disabled={isLoading}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentPage(1);
+                handleSearch();
+              }}
+              disabled={isLoading || !query.trim()}
+            >
+              {isLoading ? "Searching..." : "Search"}
+            </button>
+            <div className="searched-movie">
+              {searchedMovieList.map((movie) => (
+                <p 
+                  key={movie.id} 
+                  onClick={() => handleSelectMovie(movie)}
+                  className={selectedMovie?.id === movie.id ? "selected" : ""}
+                >
+                  {movie.original_title}
+                </p>
+              ))}
             </div>
-          )}
-        </div>
+            {totalPages > 1 && (
+              <div className="pagination">
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1 || isLoading}
+                >
+                  Previous
+                </button>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages || isLoading}
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </div>
+          <hr />
+        </>
       )}
-      <hr />
 
-      {/* Form Section */}
       <div className="container">
         <form onSubmit={(e) => e.preventDefault()}>
           {selectedMovie && (
@@ -321,12 +323,13 @@ const Form = () => {
               max="10"
             />
           </div>
-          <button
-            type="button"
-            onClick={handleSave}
+
+          <button 
+            type="button" 
+            onClick={movieId ? handleUpdate : handleSave}
             disabled={isLoading}
           >
-            {isLoading ? "Saving..." : movieId ? "Update" : "Save"}
+            {isLoading ? "Saving..." : (movieId ? "Update" : "Save")}
           </button>
         </form>
       </div>

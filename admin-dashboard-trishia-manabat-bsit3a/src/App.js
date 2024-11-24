@@ -7,7 +7,9 @@ import Movie from './pages/Main/Movie/Movie';
 import Lists from './pages/Main/Movie/Lists/Lists';
 import Form from './pages/Main/Movie/Form/Form';
 import Register from './pages/Public/Register/Register';
-import CastAndCrews from './pages/Main/CastAndCrews/CastAndCrews'; // Correct import path
+import CastAndCrews from './pages/Main/CastAndCrews/CastAndCrews'; 
+import Dashboard from './pages/Main/Dashboard/Dashboard'; // Import Dashboard component
+import cinemaImage from './pages/Public/Login/cinema.jpg'; 
 
 const router = createBrowserRouter([
   {
@@ -15,7 +17,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/Register', // Register route
+    path: '/Register',
     element: <Register />,
   },
   {
@@ -23,22 +25,26 @@ const router = createBrowserRouter([
     element: <Main />,
     children: [
       {
-        path: 'movies', // Relative path to '/main/movies'
+        path: 'dashboard', // Route for the Dashboard
+        element: <Dashboard />, // Render the Dashboard component
+      },
+      {
+        path: 'movies',
         element: <Movie />,
         children: [
           {
-            path: '', // Default path for '/main/movies'
+            path: '',
             element: <Lists />,
           },
           {
-            path: 'form/:movieId?', // Use relative path for the form
+            path: 'form/:movieId?',
             element: <Form />,
           },
         ],
       },
       {
-        path: 'cast', // Relative path to '/main/cast'
-        element: <CastAndCrews />, // Render the CastAndCrews component
+        path: 'cast',
+        element: <CastAndCrews />,
       },
     ],
   },

@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Cast.css'; // Custom styling for cinematic look
 import { FaEdit, FaTrash } from 'react-icons/fa'; // For edit and delete icons
+import './Cast.css'; // Custom styling for cinematic look
 
 const CastAndCrews = () => {
   const [castProfiles, setCastProfiles] = useState([]);
@@ -11,31 +10,31 @@ const CastAndCrews = () => {
   const [profileLink, setProfileLink] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const movieId = 38; // Example Movie ID (you can replace this with a dynamic value)
-  const token = 'your_token_here'; // Ensure you have the correct token to authorize API calls
+  const movieId = 38; // Example Movie ID
+  const token = 'your_token_here'; // Replace with your valid token
 
   // Fetch the cast profiles for a specific movie
-  const fetchCastProfiles = useCallback(async () => {
+  const fetchCastProfiles = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://localhost/movieproject-api/casts/${movieId}`, {
+      const response = await axios.get(`http://localhost/movieproject-api/admin/casts/${movieId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCastProfiles(response.data);
+      setError(''); // Clear any previous errors
     } catch (err) {
-      setError('Error fetching cast profiles');
+      setError('Error fetching cast profiles'); // Show error if fetching fails
     } finally {
       setIsLoading(false);
     }
-  }, [movieId, token]);
+  };
 
   useEffect(() => {
     fetchCastProfiles();
-  }, [fetchCastProfiles]);
+  }, []);
 
-  // Create a new cast profile using the form
+  // Create a new cast profile using form data
   const handleAddProfile = async () => {
     if (!castName || !characterName || !profileLink) {
       setError('All fields are required');
@@ -54,7 +53,7 @@ const CastAndCrews = () => {
       await axios.post('http://localhost/movieproject-api/admin/casts', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data', // Ensure the correct content type for form data
+          'Content-Type': 'multipart/form-data',
         },
       });
 
@@ -71,54 +70,10 @@ const CastAndCrews = () => {
     }
   };
 
-  // Update a cast profile
-  const handleEditProfile = async (id) => {
-    const newCharacterName = prompt('Enter new character name');
-    if (!newCharacterName) return;
-
-    const newProfileLink = prompt('Enter new profile link');
-    if (!newProfileLink) return;
-
-    setIsLoading(true);
-    try {
-      const data = {
-        movieId: movieId,
-        name: castName,
-        characterName: newCharacterName,
-        url: newProfileLink,
-      };
-      await axios.patch(`http://localhost/movieproject-api/admin/casts/${id}`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      fetchCastProfiles(); // Re-fetch the profiles after updating
-    } catch (err) {
-      setError('Error updating profile');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Delete a cast profile
-  const handleDeleteProfile = async (id) => {
-    if (window.confirm('Are you sure you want to delete this profile?')) {
-      setIsLoading(true);
-      try {
-        await axios.delete(`http://localhost/movieproject-api/admin/casts/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        fetchCastProfiles(); // Re-fetch the profiles after deleting
-      } catch (err) {
-        setError('Error deleting profile');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
   return (
     <div className="cast">
       <h1>Cast & Crew</h1>
-      {error && <div className="error">{error}</div>}
+      {error && <div className="error">{error}</div>}  {/* Error message only shown when error occurs */}
       {isLoading && <div className="loading">Loading...</div>}
 
       {/* Add Profile Form */}
@@ -141,7 +96,9 @@ const CastAndCrews = () => {
           value={profileLink}
           onChange={(e) => setProfileLink(e.target.value)}
         />
-        <button onClick={handleAddProfile} disabled={isLoading}>Add Cast Profile</button>
+        <button onClick={handleAddProfile} disabled={isLoading}>
+          Add Cast Profile
+        </button>
       </div>
 
       {/* Cast Profiles List */}
@@ -160,15 +117,13 @@ const CastAndCrews = () => {
                 View Profile
               </a>
               <div className="actions">
-                <button onClick={() => handleEditProfile(profile.id)}><FaEdit /> Edit</button>
-                <button onClick={() => handleDeleteProfile(profile.id)}><FaTrash /> Delete</button>
+                <button onClick={() => console.log('Edit profile')}><FaEdit /> Edit</button>
+                <button onClick={() => console.log('Delete profile')}><FaTrash /> Delete</button>
               </div>
             </div>
           ))
         )}
       </div>
-
-      <button onClick={() => navigate(-1)} className="back-button">Back</button>
     </div>
   );
 };
