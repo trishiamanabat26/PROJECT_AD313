@@ -33,15 +33,12 @@ const Lists = () => {
     const isConfirm = window.confirm('Are you sure you want to delete this movie?');
     if (isConfirm) {
       try {
-        // Delete movie from API
         await axios.delete(`/movies/${id}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-
-        // Remove the deleted movie from the state (optimistic update)
-        setLists(lists.filter((movie) => movie.id !== id));
+        setLists(lists.filter((movie) => movie.id !== id)); // Optimistic update
       } catch (err) {
         alert('Failed to delete movie');
       }
@@ -50,7 +47,11 @@ const Lists = () => {
 
   // Handle edit movie (navigates to the form with movie ID)
   const handleEdit = (id) => {
-    navigate(`/main/movies/form/${id}`); // Navigate to the edit form with movie ID
+    // Optional confirmation before navigating (you can remove this step if not needed)
+    const isConfirm = window.confirm('Are you sure you want to edit this movie?');
+    if (isConfirm) {
+      navigate(`/main/movies/form/${id}`); // Navigate to the edit form with movie ID
+    }
   };
 
   return (
@@ -90,16 +91,15 @@ const Lists = () => {
                   <button
                     type='button'
                     className="edit-button"
-                    onClick={() => handleEdit(movie.id)}
+                    onClick={() => handleEdit(movie.id)} // Handle edit click
                   >
                     Edit
                   </button>
-                  
-                  {/* Delete button */}
+                   {/* Delete button */}
                   <button 
                     type='button' 
                     className="delete-button" 
-                    onClick={() => handleDelete(movie.id)}
+                    onClick={() => handleDelete(movie.id)} // Handle delete click
                   >
                     Delete
                   </button>

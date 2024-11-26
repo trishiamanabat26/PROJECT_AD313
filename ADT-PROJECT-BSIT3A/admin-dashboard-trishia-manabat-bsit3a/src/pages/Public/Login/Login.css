@@ -1,120 +1,184 @@
-/* Main container for centering the form */
-.main-container {
+/* Full-page container */
+.login-container {
+  position: relative;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Changed to column for welcoming message */
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #a3c8fc, #f0f4f8);
+  background-color: #000;
+  background-image: url('./netflixx.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+  text-align: center; /* Center text horizontally */
+  color: #fff;
+}
+
+/* Welcoming message */
+.welcome-message {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adds shadow for better visibility */
+  animation: fadeIn 2s ease-in-out;
 }
 
 /* Form container */
-.form-container {
-  padding: 3rem 2rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
+.login-form-container {
+  background: rgba(0, 0, 0, 0.8); /* Dark background for contrast */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  width: 350px;
+  animation: fadeIn 1s ease-out; /* Fade-in animation */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Form styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.login-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
   text-align: center;
-  transition: transform 0.3s ease-in-out;
+  margin-bottom: 10px;
 }
 
-.form-container:hover {
-  transform: scale(1.05);
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.form-container > div {
-  margin-bottom: 16px;
+.form-label {
+  font-size: 14px;
+  color: #fff;
 }
 
-
-.form-group label {
-  width: 100%;
-  margin-bottom: 6px;
-  text-align: left;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #333;
+.form-input {
+  padding: 10px;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
 }
 
-
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: #555;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-  border-color: #4caf50; 
+/* Focused input styling */
+.form-input:focus {
   outline: none;
+  border-color: #e50914; /* Netflix red color */
 }
 
-
-.login.errors {
-  margin-bottom: 1rem;
+/* Valid input border */
+.form-input.valid {
+  border-color: #28a745; /* Green for valid */
 }
 
-.errors {
-  color: red;
+/* Invalid input border */
+.form-input.invalid {
+  border-color: #e50914; /* Red for invalid */
+}
+
+/* Error text styling */
+.error-text {
+  color: #e50914;
   font-size: 12px;
-  margin-bottom: 0.5rem;
 }
 
-
-.submit-container {
-  margin-top: 20px;
-}
-
-.submit-container button {
-  background-color: #4caf50; 
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
+.show-password {
+  font-size: 14px;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  margin-top: 10px;
 }
 
-.submit-container button:hover {
-  background-color: #45a049; 
-  transform: translateY(-2px); 
+.login-btn {
+  padding: 10px;
+  background-color: #e50914;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.submit-container button:active {
-  background-color: #3e8e41; 
-  transform: translateY(1px); 
+/* Hover effect for login button */
+.login-btn:hover {
+  background-color: #b81d13; /* Darker shade of red */
 }
 
-
-.register-container {
-  margin-top: 20px;
-  font-size: 0.9rem;
+/* Disabled login button styling */
+.login-btn:disabled {
+  background-color: #666;
+  cursor: not-allowed;
 }
 
-.register-container a {
-  color: #2196f3;
+/* Register link styling */
+.register-link {
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #fff;
   text-decoration: none;
+  font-weight: bold;
 }
 
-.register-container a:hover {
+.register-link a:hover {
   text-decoration: underline;
 }
 
-
-.show-password {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #555;
-  cursor: pointer;
+/* Error message styling */
+.login-error {
+  color: #e50914;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.show-password:hover {
-  color: #4caf50; 
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .login-form-container {
+    width: 90%;
+  }
+
+  .login-title {
+    font-size: 24px; /* Smaller title for small screens */
+  }
+
+  .form-input {
+    font-size: 14px; /* Adjust input size for small screens */
+  }
+
+  .login-btn {
+    font-size: 14px; /* Adjust button size for small screens */
+  }
+
+  /* Make the welcome message smaller on small screens */
+  .welcome-message {
+    font-size: 28px;
+  }
 }

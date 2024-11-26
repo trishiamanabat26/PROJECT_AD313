@@ -1,3 +1,4 @@
+// src/pages/Main/Main.js
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './Main.css';
@@ -30,7 +31,7 @@ function Main() {
               <a href="/main/movies">Movies</a>
             </li>
             <li>
-              <a href="/main/cast">Cast</a>
+              <a href="/main/cast">Cast & Crew</a> {/* Link to the Cast section */}
             </li>
             <li>
               <a href="/main/photos">Photos</a>
