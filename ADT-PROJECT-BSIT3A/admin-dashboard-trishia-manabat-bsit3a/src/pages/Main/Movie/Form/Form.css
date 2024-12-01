@@ -1,16 +1,16 @@
-/* Global Styling */
+
 body {
-  font-family: 'Arial', sans-serif; /* Simple sans-serif for readability */
-  background-color: #121212; /* Dark background for a cinematic effect */
-  color: #fff; /* Light text on dark background */
+  font-family: 'Arial', sans-serif; 
+  background-color: #121212; 
+  color: #fff; 
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  height: 100%; /* Ensure body takes full height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  height: 100%; 
+  overflow-y: auto; 
 }
 
-/* Header Styling */
+
 h1, h2 {
   font-family: 'Georgia', serif; 
   font-weight: bold;
@@ -18,14 +18,14 @@ h1, h2 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-/* Gradient Background for Sections */
+
 .container, .search-container {
-  background: linear-gradient(145deg, #1d1d1d, #2f2f2f); /* Dark gradient */
+  background: linear-gradient(145deg, #1d1d1d, #2f2f2f); 
   padding: 20px;
   border-radius: 10px;
 }
 
-/* Form Fields */
+
 input, textarea {
   background-color: #333;
   color: #fff;
@@ -38,16 +38,15 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-  border-color: #ffab00; /* Highlight with gold when focused */
+  border-color: #ffab00; 
   outline: none;
 }
 
-/* Buttons */
 button {
-  background-color: #ffab00; /* Cinematic accent color */
+  background-color: #b92815; 
   color: #121212;
   border: none;
-  padding: 12px 25px;
+  padding: 10px 25px;
   font-size: 16px;
   border-radius: 50px;
   cursor: pointer;
@@ -55,18 +54,17 @@ button {
 }
 
 button:hover {
-  background-color: #ff8f00; /* Darker shade on hover */
+  background-color: #ff8f00; 
   transform: scale(1.05);
 }
 
 button:disabled {
-  background-color: #666; /* Disabled state */
+  background-color: #666; 
   cursor: not-allowed;
 }
 
-/* Loading/Error Message */
 .error-message, .loading-message {
-  background-color: #ff3838; /* Red for errors */
+  background-color: #ff3838; 
   color: #fff;
   padding: 10px;
   border-radius: 5px;
@@ -74,16 +72,16 @@ button:disabled {
 }
 
 .loading-message {
-  background-color: #0088cc; /* Blue for loading */
+  background-color: #0088cc; 
 }
 
-/* Selected Movie Styling */
+
 .selected {
   font-weight: bold;
-  color: #ffab00; /* Gold highlight for selected movie */
+  color: #ffab00; 
 }
 
-/* Modal-like Popup for Movie Selection */
+
 .searched-movie p {
   padding: 10px;
   margin: 5px;
@@ -97,7 +95,7 @@ button:disabled {
   background-color: #444;
 }
 
-/* Pagination */
+
 .pagination {
   text-align: center;
   margin-top: 20px;
@@ -118,23 +116,22 @@ button:disabled {
 
 /* Movie Poster Style */
 .poster-image {
-  max-width: 200px; /* Limit the max width */
-  width: 100%; /* Ensure responsive resizing */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensures image covers the area without stretching */
+  max-width: 200px; 
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); /* Adds depth */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); 
   transition: transform 0.3s ease;
-  margin: 0 auto; /* Center the image */
-  display: block; /* Ensure proper centering */
+  margin: 0 auto; 
+  display: block; 
 }
 
-/* Hover Effect for Images */
 .poster-image:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  transform: scale(1.05); 
 }
 
-/* Movie Grid Layout */
+
 .search-container .searched-movie {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -147,10 +144,9 @@ button:disabled {
   font-size: 16px;
 }
 
-/* Responsive Styles */
 @media screen and (max-width: 768px) {
   .poster-image {
-    max-width: 180px; /* Make the image slightly smaller on smaller screens */
+    max-width: 180px; 
   }
 
   .container {
@@ -163,7 +159,7 @@ button:disabled {
   }
 
   .search-container input {
-    width: 100%; /* Full width on smaller screens */
+    width: 100%; 
     margin-bottom: 10px;
   }
 
@@ -180,7 +176,7 @@ button:disabled {
 
 @media screen and (max-width: 480px) {
   .poster-image {
-    max-width: 150px; /* Even smaller on mobile */
+    max-width: 150px; 
   }
 
   .container {
@@ -208,7 +204,7 @@ button:disabled {
   }
 }
 
-/* Flexible Form Layout */
+
 .container form {
   display: flex;
   flex-direction: column;
@@ -221,7 +217,7 @@ button:disabled {
   margin-bottom: 15px;
 }
 
-/* Improved Scrollbar for Movie Search Results */
+
 .searched-movie {
   max-height: 300px;
   overflow-y: auto;
@@ -242,8 +238,7 @@ button:disabled {
   border-radius: 4px;
 }
 
-/* Scrollable Body */
 body {
-  overflow-y: scroll; /* Allow scrolling */
-  height: 100vh; /* Make the body take up the full height of the viewport */
+  overflow-y: scroll; 
+  height: 100vh; 
 }

@@ -90,7 +90,7 @@ function Register() {
     <div
       className="register-container"
       style={{
-        backgroundImage: `url(${netflixxImage})`, // Apply the imported image here
+        backgroundImage: `url(${netflixxImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -99,7 +99,7 @@ function Register() {
         <h3 className="welcome-message">Welcome to Movies DB! Register to Start Watching.</h3>
         <form>
           <div className="form-container">
-            {/* First Name */}
+            
             <div className="form-group">
               <label>First Name:</label>
               <input
@@ -111,7 +111,7 @@ function Register() {
               {debounceState && isFieldsDirty && firstName === '' && <span className="error-text">This field is required</span>}
             </div>
 
-            {/* Middle Name */}
+            
             <div className="form-group">
               <label>Middle Name:</label>
               <input
@@ -123,7 +123,7 @@ function Register() {
               {debounceState && isFieldsDirty && middleName === '' && <span className="error-text">This field is required</span>}
             </div>
 
-            {/* Last Name */}
+       
             <div className="form-group">
               <label>Last Name:</label>
               <input
@@ -135,7 +135,7 @@ function Register() {
               {debounceState && isFieldsDirty && lastName === '' && <span className="error-text">This field is required</span>}
             </div>
 
-            {/* Contact Number */}
+           
             <div className="form-group">
               <label>Contact Number:</label>
               <input
@@ -147,7 +147,7 @@ function Register() {
               {debounceState && isFieldsDirty && contactNo === '' && <span className="error-text">This field is required</span>}
             </div>
 
-            {/* Email */}
+  
             <div className="form-group">
               <label>Email:</label>
               <input
@@ -159,7 +159,7 @@ function Register() {
               {debounceState && isFieldsDirty && email === '' && <span className="error-text">This field is required</span>}
             </div>
 
-            {/* Password */}
+     
             <div className="form-group">
               <label>Password:</label>
               <input
@@ -175,7 +175,7 @@ function Register() {
               {isShowPassword ? 'Hide' : 'Show'} Password
             </div>
 
-            {/* Submit Button */}
+         
             <div className="submit-container">
               <button
                 type="button"
@@ -199,7 +199,6 @@ function Register() {
               </button>
             </div>
 
-            {/* Redirect to login */}
             <div className="register-link">
               <span>
                 <small>

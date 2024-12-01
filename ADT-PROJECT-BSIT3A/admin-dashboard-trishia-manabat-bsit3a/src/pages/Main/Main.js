@@ -31,7 +31,7 @@ function Main() {
               <a href="/main/movies">Movies</a>
             </li>
             <li>
-              <a href="/main/cast">Cast & Crew</a> {/* Link to the Cast section */}
+              <a href="/main/cast">Cast & Crew</a> 
             </li>
             <li>
               <a href="/main/photos">Photos</a>

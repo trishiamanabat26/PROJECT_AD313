@@ -7,10 +7,11 @@ import Movie from './pages/Main/Movie/Movie';
 import Lists from './pages/Main/Movie/Lists/Lists';
 import Form from './pages/Main/Movie/Form/Form';
 import Register from './pages/Public/Register/Register';
-import CastAndCrews from './pages/Main/CastAndCrews/CastAndCrews'; 
-import Dashboard from './pages/Main/Dashboard/Dashboard'; // Import Dashboard component
+import CastAndCrews from './pages/Main/CastAndCrews/CastAndCrews';
+import Dashboard from './pages/Main/Dashboard/Dashboard'; 
+import Photo from './pages/Main/Photos/Photo'; 
+import Video from './pages/Main/Videos/Videos'; 
 import netflixxImage from './pages/Public/Login/netflixx.jpg';
-
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
     element: <Main />,
     children: [
       {
-        path: 'dashboard', // Route for the Dashboard
-        element: <Dashboard />, // Render the Dashboard component
+        path: 'dashboard', 
+        element: <Dashboard />, 
       },
       {
         path: 'movies',
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: 'cast',
         element: <CastAndCrews />,
+      },
+      {
+        path: 'photos',
+        element: <Photo />, 
+      },
+      {
+        path: 'videos', 
+        element: <Video />,
       },
     ],
   },

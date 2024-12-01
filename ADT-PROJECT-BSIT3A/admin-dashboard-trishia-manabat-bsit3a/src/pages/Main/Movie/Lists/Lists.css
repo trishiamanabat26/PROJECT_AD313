@@ -84,7 +84,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Action Buttons Styling */
+
 .edit-button,
 .delete-button {
   padding: 12px 24px;
@@ -121,7 +121,6 @@
   box-shadow: 0 6px 16px rgba(255, 82, 82, 0.4);
 }
 
-/* Status Messages Styling */
 .loading-text,
 .error-text,
 .no-data-text {
@@ -148,13 +147,11 @@
   color: #bdbdbd;
 }
 
-/* Movie Rating Stars */
 .rating {
   color: #ffd700;
   font-size: 1.2rem;
 }
 
-/* Custom Scrollbar */
 .table-container::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -170,7 +167,6 @@
   border-radius: 4px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .lists-container {
     padding: 20px;
@@ -218,9 +214,9 @@
     margin: 4px;
   }
 }
-/* Previous styles remain the same until the action buttons section */
 
-/* Action Column Styling */
+
+
 .actions-cell {
   white-space: nowrap;
   text-align: center;
@@ -229,7 +225,7 @@
   padding: 16px !important;
 }
 
-/* Action Buttons Container */
+
 .action-buttons {
   display: flex;
   gap: 8px;
@@ -237,7 +233,7 @@
   align-items: center;
 }
 
-/* Action Buttons Styling */
+
 .edit-button,
 .delete-button {
   padding: 10px 20px;
@@ -280,12 +276,12 @@
   box-shadow: 0 6px 16px rgba(255, 82, 82, 0.4);
 }
 
-/* Button Icons */
+
 .button-icon {
   font-size: 1rem;
 }
 
-/* Responsive Design for Actions */
+
 @media (max-width: 768px) {
   .actions-cell {
     min-width: 180px;

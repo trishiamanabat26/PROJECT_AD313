@@ -18,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: '', element: <Home /> }, // "/main" -> Home
       { path: 'view/:movieId', element: <View /> }, // "/main/view/:movieId" -> View movie details
+      
     ],
   },
 ]);

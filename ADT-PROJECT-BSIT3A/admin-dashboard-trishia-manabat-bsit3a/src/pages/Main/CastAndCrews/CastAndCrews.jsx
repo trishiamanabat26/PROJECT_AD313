@@ -1,129 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaEdit, FaTrash } from 'react-icons/fa'; // For edit and delete icons
-import './Cast.css'; // Custom styling for cinematic look
+import React, { useState } from "react";
+import axios from "axios";
 
 const CastAndCrews = () => {
-  const [castProfiles, setCastProfiles] = useState([]);
-  const [castName, setCastName] = useState('');
-  const [characterName, setCharacterName] = useState('');
-  const [profileLink, setProfileLink] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [form, setForm] = useState({
+    userId: "1",
+    movieId: "38",
+    name: "",
+    url: "",
+    characterName: "",
+  });
+  const [message, setMessage] = useState("");
 
-  const movieId = 38; // Example Movie ID
-  const token = 'your_token_here'; // Replace with your valid token
-
-  // Fetch the cast profiles for a specific movie
-  const fetchCastProfiles = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(`http://localhost/movieproject-api/admin/casts/${movieId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setCastProfiles(response.data);
-      setError(''); // Clear any previous errors
-    } catch (err) {
-      setError('Error fetching cast profiles'); // Show error if fetching fails
-    } finally {
-      setIsLoading(false);
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
-  useEffect(() => {
-    fetchCastProfiles();
-  }, []);
-
-  // Create a new cast profile using form data
-  const handleAddProfile = async () => {
-    if (!castName || !characterName || !profileLink) {
-      setError('All fields are required');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('userId', '1');  // Example userId, adjust as needed
-    formData.append('movieId', movieId.toString());  // Movie ID
-    formData.append('name', castName);  // Cast Name
-    formData.append('characterName', characterName);  // Character Name
-    formData.append('url', profileLink);  // Profile URL (Image URL)
-
-    setIsLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await axios.post('http://localhost/movieproject-api/admin/casts', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      // Re-fetch profiles and clear form on successful add
-      fetchCastProfiles();
-      setCastName('');
-      setCharacterName('');
-      setProfileLink('');
-      setError('');
-    } catch (err) {
-      setError('Error adding profile');
-    } finally {
-      setIsLoading(false);
+      const response = await axios.post(
+        "http://localhost/movieproject-api/admin/casts",
+        form,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsImZpcnN0TmFtZSI6InN0cmluZyIsIm1pZGRsZU5hbWUiOiJzdHJpbmciLCJsYXN0TmFtZSI6InN0cmluZyIsImNvbnRhY3RObyI6InN0cmluZyIsInJvbGUiOiJ1c2VyIn0.D-Q2rYdQe9UWDu1HWAg_i1Hg48J-tyglpXZgiAQYTl0", // Add the Bearer Token here
+          },
+        }
+      );
+      setMessage(`Cast created: ${response.data.id}`);
+    } catch (error) {
+      setMessage("Failed to create cast.");
     }
   };
 
   return (
-    <div className="cast">
-      <h1>Cast & Crew</h1>
-      {error && <div className="error">{error}</div>}  {/* Error message only shown when error occurs */}
-      {isLoading && <div className="loading">Loading...</div>}
-
-      {/* Add Profile Form */}
-      <div className="add-profile-form">
+    <div>
+      <h2>Create New Cast</h2>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Cast Name"
-          value={castName}
-          onChange={(e) => setCastName(e.target.value)}
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          placeholder="Name"
         />
         <input
           type="text"
+          name="characterName"
+          value={form.characterName}
+          onChange={handleChange}
           placeholder="Character Name"
-          value={characterName}
-          onChange={(e) => setCharacterName(e.target.value)}
         />
         <input
           type="text"
-          placeholder="Profile Link (Image URL)"
-          value={profileLink}
-          onChange={(e) => setProfileLink(e.target.value)}
+          name="url"
+          value={form.url}
+          onChange={handleChange}
+          placeholder="Image URL"
         />
-        <button onClick={handleAddProfile} disabled={isLoading}>
-          Add Cast Profile
-        </button>
-      </div>
-
-      {/* Cast Profiles List */}
-      <div className="cast-profile-list">
-        <h2>Existing Cast Profiles</h2>
-        {castProfiles.length === 0 ? (
-          <div>No cast profiles available.</div>
-        ) : (
-          castProfiles.map((profile) => (
-            <div key={profile.id} className="cast-profile">
-              <h3>{profile.name} (Character: {profile.characterName})</h3>
-              {profile.url && (
-                <img src={profile.url} alt={profile.name} className="profile-image" />
-              )}
-              <a href={`/${profile.movieId}`} target="_blank" rel="noopener noreferrer">
-                View Profile
-              </a>
-              <div className="actions">
-                <button onClick={() => console.log('Edit profile')}><FaEdit /> Edit</button>
-                <button onClick={() => console.log('Delete profile')}><FaTrash /> Delete</button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+        <button type="submit">Create Cast</button>
+      </form>
+      {message && <p>{message}</p>}
     </div>
   );
 };

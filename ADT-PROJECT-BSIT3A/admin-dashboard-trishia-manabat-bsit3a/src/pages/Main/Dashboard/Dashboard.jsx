@@ -3,16 +3,18 @@ import axios from 'axios';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const [movies, setMovies] = useState([]); // All fetched movies
-  const [filteredMovies, setFilteredMovies] = useState([]); // Movies after filtering
-  const [favorites, setFavorites] = useState([]); // Favorite movies state
-  const [searchTerm, setSearchTerm] = useState(''); // Search term input
-  const [loading, setLoading] = useState(true); // Loading state
-  const [totalMovies, setTotalMovies] = useState(0); // Total number of movies
-  const [error, setError] = useState(''); // Error handling
-  const [view, setView] = useState('all'); // State to track selected view ('all' or 'favorites')
+  const [movies, setMovies] = useState([]); 
+  const [filteredMovies, setFilteredMovies] = useState([]); 
+  const [favorites, setFavorites] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const [loading, setLoading] = useState(true);
+  const [totalMovies, setTotalMovies] = useState(0); 
+  const [error, setError] = useState(''); 
+  const [view, setView] = useState('all'); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null); 
 
-  // Fetch movies from the API
+
   const fetchMovies = () => {
     setLoading(true);
     setError('');
@@ -31,54 +33,95 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
   };
 
-  // Fetch favorites from localStorage
+
   const loadFavorites = () => {
     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
     setFavorites(savedFavorites);
   };
 
-  // Fetch movies and favorites on mount
+
   useEffect(() => {
     fetchMovies();
     loadFavorites();
   }, []);
 
-  // Handle search filter change
+
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
-    // Filter movies by title based on the selected view
     const filtered = (view === 'favorites' ? favorites : movies).filter((movie) =>
       movie.title.toLowerCase().includes(value)
     );
     setFilteredMovies(filtered);
   };
 
-  // Toggle between showing all movies or only favorites
+
   const handleViewChange = (e) => {
     setView(e.target.value);
 
-    // Update filteredMovies based on the selected view
     if (e.target.value === 'favorites') {
-      setFilteredMovies(favorites); // Show only favorites
+      setFilteredMovies(favorites); 
     } else {
-      setFilteredMovies(movies); // Show all movies
+      setFilteredMovies(movies); 
     }
   };
 
-  // Handle removing a movie from favorites
+
   const handleRemoveFromFavorites = (movie) => {
     const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
     setFavorites(updatedFavorites);
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
 
-    // Update filtered list if we're currently viewing favorites
     if (view === 'favorites') {
       setFilteredMovies(updatedFavorites);
     }
 
     alert(`${movie.title} removed from favorites.`);
+  };
+
+
+  const handleViewDetails = (movie) => {
+    setSelectedMovie(movie);
+    setIsModalOpen(true);
+  };
+
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedMovie(null);
+  };
+
+
+  const handlePrint = () => {
+    if (selectedMovie) {
+      const printWindow = window.open('', '', 'width=800,height=600');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print Movie Details</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; }
+              .movie-title { font-size: 24px; font-weight: bold; }
+              .movie-detail { margin-bottom: 10px; }
+              .movie-detail strong { margin-right: 5px; }
+            </style>
+          </head>
+          <body>
+            <h1>Movie Details</h1>
+            <div class="movie-detail">
+              <p class="movie-title">${selectedMovie.title}</p>
+              <p><strong>Overview:</strong> ${selectedMovie.overview}</p>
+              <p><strong>Popularity:</strong> ${selectedMovie.popularity}</p>
+              <p><strong>Release Date:</strong> ${selectedMovie.releaseDate}</p>
+              <p><strong>Vote Average:</strong> ${selectedMovie.voteAverage}</p>
+            </div>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
   };
 
   if (loading) {
@@ -87,13 +130,15 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* Header with total movie count */}
+
       <header className="dashboard-header">
         <h1>🎬 Movie Dashboard</h1>
-        <p>Total Movies: <strong>{totalMovies}</strong></p>
+        <p>
+          Total Movies: <strong>{totalMovies}</strong>
+        </p>
       </header>
 
-      {/* Dropdown or buttons to toggle view */}
+     
       <div className="view-toggle">
         <label htmlFor="view-selector">View: </label>
         <select
@@ -107,7 +152,7 @@ const Dashboard = () => {
         </select>
       </div>
 
-      {/* Search Bar */}
+     
       <div className="dashboard-search">
         <input
           type="text"
@@ -135,7 +180,13 @@ const Dashboard = () => {
                 <h3>{movie.title}</h3>
                 <p>{movie.releaseDate}</p>
 
-                {/* Show 'Remove from Favorites' button for movies in favorites view */}
+                <button
+                  onClick={() => handleViewDetails(movie)}
+                  className="view-details-button"
+                >
+                  View Movie Details
+                </button>
+
                 {view === 'favorites' && (
                   <button
                     onClick={() => handleRemoveFromFavorites(movie)}
@@ -151,6 +202,26 @@ const Dashboard = () => {
           <p className="no-results">No movies found.</p>
         )}
       </div>
+
+    
+      {isModalOpen && selectedMovie && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>{selectedMovie.title}</h2>
+            <p><strong>Overview:</strong> {selectedMovie.overview}</p>
+            <p><strong>Popularity:</strong> {selectedMovie.popularity}</p>
+            <p><strong>Release Date:</strong> {selectedMovie.releaseDate}</p>
+            <p><strong>Vote Average:</strong> {selectedMovie.voteAverage}</p>
+            <button onClick={closeModal} className="close-modal-button">
+              Close
+            </button>
+            {/* Print Button */}
+            <button onClick={handlePrint} className="print-button">
+              Print Movie Details
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

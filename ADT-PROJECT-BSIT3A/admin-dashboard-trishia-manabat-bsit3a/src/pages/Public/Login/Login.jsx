@@ -3,7 +3,7 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import axios from 'axios';
-import netflixxImage from './netflixx.jpg'; // Import the image
+import netflixxImage from './netflixx.jpg'; 
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -52,7 +52,7 @@ function Login() {
     })
       .then((res) => {
         console.log(res);
-        // store response access token to localstorage
+        
         localStorage.setItem('accessToken', res.data.access_token);
         navigate('/main/movies');
         setStatus('idle');
@@ -72,7 +72,7 @@ function Login() {
     <div
       className="login-container"
       style={{
-        backgroundImage: `url(${netflixxImage})`, // Apply the imported image here
+        backgroundImage: `url(${netflixxImage})`, 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
