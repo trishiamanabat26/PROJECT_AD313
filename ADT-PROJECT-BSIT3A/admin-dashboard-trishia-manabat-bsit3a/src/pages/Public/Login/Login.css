@@ -1,9 +1,8 @@
-/* Full-page container */
 .login-container {
   position: relative;
   height: 100vh;
   display: flex;
-  flex-direction: column; /* Changed to column for welcoming message */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #000;
@@ -13,30 +12,27 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: hidden;
-  text-align: center; /* Center text horizontally */
+  text-align: center;
   color: #fff;
 }
 
-/* Welcoming message */
 .welcome-message {
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adds shadow for better visibility */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   animation: fadeIn 2s ease-in-out;
 }
 
-/* Form container */
 .login-form-container {
-  background: rgba(0, 0, 0, 0.8); /* Dark background for contrast */
+  background: rgba(0, 0, 0, 0.8);
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   width: 350px;
-  animation: fadeIn 1s ease-out; /* Fade-in animation */
+  animation: fadeIn 1s ease-out;
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -46,7 +42,6 @@
   }
 }
 
-/* Form styling */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -83,23 +78,19 @@
   transition: border-color 0.3s ease-in-out;
 }
 
-/* Focused input styling */
 .form-input:focus {
   outline: none;
-  border-color: #e50914; /* Netflix red color */
+  border-color: #e50914;
 }
 
-/* Valid input border */
 .form-input.valid {
-  border-color: #28a745; /* Green for valid */
+  border-color: #28a745;
 }
 
-/* Invalid input border */
 .form-input.invalid {
-  border-color: #e50914; /* Red for invalid */
+  border-color: #e50914;
 }
 
-/* Error text styling */
 .error-text {
   color: #e50914;
   font-size: 12px;
@@ -124,18 +115,15 @@
   transition: background-color 0.3s ease;
 }
 
-/* Hover effect for login button */
 .login-btn:hover {
-  background-color: #b81d13; /* Darker shade of red */
+  background-color: #b81d13;
 }
 
-/* Disabled login button styling */
 .login-btn:disabled {
   background-color: #666;
   cursor: not-allowed;
 }
 
-/* Register link styling */
 .register-link {
   text-align: center;
   font-size: 14px;
@@ -151,7 +139,6 @@
   text-decoration: underline;
 }
 
-/* Error message styling */
 .login-error {
   color: #e50914;
   font-size: 14px;
@@ -159,25 +146,23 @@
   margin-bottom: 10px;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 600px) {
   .login-form-container {
     width: 90%;
   }
 
   .login-title {
-    font-size: 24px; /* Smaller title for small screens */
+    font-size: 24px;
   }
 
   .form-input {
-    font-size: 14px; /* Adjust input size for small screens */
+    font-size: 14px;
   }
 
   .login-btn {
-    font-size: 14px; /* Adjust button size for small screens */
+    font-size: 14px;
   }
 
-  /* Make the welcome message smaller on small screens */
   .welcome-message {
     font-size: 28px;
   }

@@ -56,29 +56,29 @@
     background-position: center;
   }
   
-  /* Form container with padding, rounded corners, and centering */
+  
   .form-container {
     padding: 4rem 2rem;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-    max-width: 450px; /* Maximum width to ensure proper scaling */
+    max-width: 450px;
     width: 100%;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto; 
   }
   
-  /* Individual form fields container */
+  
   .form-container > div {
     margin-bottom: 12px;
     width: 100%;
   }
   
-  /* Flexbox style for form groups */
+
   .form-group {
     display: flex;
     flex-direction: column;
@@ -86,7 +86,7 @@
     width: 100%;
   }
   
-  /* Label styling for form fields */
+
   .form-group label {
     font-size: 14px;
     font-weight: bold;
@@ -94,27 +94,25 @@
     margin-bottom: 5px;
   }
   
-  /* Error message styling */
+
   .errors {
     color: red;
     font-size: 12px;
     margin-top: 5px;
   }
-  
-  /* Submit button container */
+
   .submit-container {
     margin-top: 12px;
     width: 100%;
     text-align: center;
   }
-  
-  /* Register link text container */
+
   .register-container {
     text-align: center;
     margin-top: 15px;
   }
   
-  /* Show password text */
+
   .show-password {
     margin-bottom: 1rem;
     color: #e50914;
@@ -122,7 +120,7 @@
     font-size: 14px;
   }
   
-  /* Input field styling */
+ 
   input[type="text"], input[type="password"] {
     width: 100%;
     padding: 12px;
@@ -136,10 +134,9 @@
   
   input[type="text"]:focus, input[type="password"]:focus {
     outline: none;
-    border-color: #e50914; /* Netflix red color on focus */
+    border-color: #e50914; 
   }
   
-  /* Button styling */
   button {
     width: 100%;
     padding: 12px;
@@ -161,7 +158,7 @@
     background-color: #f40612;
   }
   
-  /* Link styling for the already have an account prompt */
+
   .register-container a {
     color: #fff;
     text-decoration: none;
