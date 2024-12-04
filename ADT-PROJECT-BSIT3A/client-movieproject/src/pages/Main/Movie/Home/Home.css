@@ -45,7 +45,7 @@
 .featured-movie-title {
   font-weight: bold;
   font-size: 5rem; /* Increased font size for better visibility */
-  color: white;
+  color: rgb(255, 243, 243);
   width: 100%;
   padding: 1.5rem;
   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for contrast */

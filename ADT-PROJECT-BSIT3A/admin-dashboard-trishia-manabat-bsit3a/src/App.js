@@ -7,10 +7,7 @@ import Movie from './pages/Main/Movie/Movie';
 import Lists from './pages/Main/Movie/Lists/Lists';
 import Form from './pages/Main/Movie/Form/Form';
 import Register from './pages/Public/Register/Register';
-import CastAndCrews from './pages/Main/CastAndCrews/CastAndCrews';
 import Dashboard from './pages/Main/Dashboard/Dashboard'; 
-import Photo from './pages/Main/Photos/Photo'; 
-import Video from './pages/Main/Videos/Videos'; 
 import netflixxImage from './pages/Public/Login/netflixx.jpg';
 
 const router = createBrowserRouter([
@@ -31,30 +28,46 @@ const router = createBrowserRouter([
         element: <Dashboard />, 
       },
       {
-        path: 'movies',
+        path: '/main/movies',
         element: <Movie />,
         children: [
           {
-            path: '',
+            path: '/main/movies',
             element: <Lists />,
           },
           {
-            path: 'form/:movieId?',
+            path: '/main/movies/form/:movieId?',
             element: <Form />,
+            children: [
+              {
+                path: '/main/movies/form/:movieId',
+                element: (
+                  <h1></h1>
+                ),
+              },
+              {
+                path: '/main/movies/form/:movieId/cast-and-crews',
+                element: (
+                  <h1>
+                   
+                  </h1>
+                ),
+              },
+              {
+                path: '/main/movies/form/:movieId/photos',
+                element: (
+                  <h1></h1>
+                ),
+              },
+              {
+                path: '/main/movies/form/:movieId/videos',
+                element: (
+                  <h1></h1>
+                ),
+              },
+            ],
           },
         ],
-      },
-      {
-        path: 'cast',
-        element: <CastAndCrews />,
-      },
-      {
-        path: 'photos',
-        element: <Photo />, 
-      },
-      {
-        path: 'videos', 
-        element: <Video />,
       },
     ],
   },
@@ -62,7 +75,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <RouterProvider router={router} />
     </div>
   );

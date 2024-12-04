@@ -1,4 +1,3 @@
-// src/pages/Main/Main.js
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './Main.css';
@@ -29,15 +28,6 @@ function Main() {
             </li>
             <li>
               <a href="/main/movies">Movies</a>
-            </li>
-            <li>
-              <a href="/main/cast">Cast & Crew</a> 
-            </li>
-            <li>
-              <a href="/main/photos">Photos</a>
-            </li>
-            <li>
-              <a href="/main/videos">Videos</a>
             </li>
             <li className="logout">
               <a onClick={handleLogout}>Logout</a>

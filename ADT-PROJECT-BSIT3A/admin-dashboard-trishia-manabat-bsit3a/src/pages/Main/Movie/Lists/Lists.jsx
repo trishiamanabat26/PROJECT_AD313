@@ -7,12 +7,11 @@ const Lists = () => {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
 
-  const [lists, setLists] = useState([]); // Full list of movies
-  const [filteredLists, setFilteredLists] = useState([]); // Filtered movies for display
-  const [searchTerm, setSearchTerm] = useState(''); // Search term input
-  const [editMessage, setEditMessage] = useState(''); // State to show edit message
+  const [lists, setLists] = useState([]);
+  const [filteredLists, setFilteredLists] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [editMessage, setEditMessage] = useState('');
 
-  // Fetch movies from API
   const getMovies = () => {
     axios
       .get('/movies', {
@@ -22,7 +21,7 @@ const Lists = () => {
       })
       .then((response) => {
         setLists(response.data);
-        setFilteredLists(response.data); // Initialize filtered list
+        setFilteredLists(response.data);
       })
       .catch((error) => {
         console.error('Error fetching movies:', error);
@@ -32,31 +31,26 @@ const Lists = () => {
 
   useEffect(() => {
     getMovies();
-  }, []); // Only fetch movies once on component mount
+  }, []);
 
-  // Handle search input changes
   const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase(); // Normalize input
+    const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
-    // Filter movies based on the search term
     const filtered = lists.filter((movie) =>
       movie.title.toLowerCase().includes(value)
     );
     setFilteredLists(filtered);
   };
 
-  // Handle add to favorites
   const handleAddToFavorites = (movie) => {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    // Check if movie is already in favorites
     if (!favorites.some((fav) => fav.id === movie.id)) {
       favorites.push(movie);
       localStorage.setItem('favorites', JSON.stringify(favorites));
       alert(`${movie.title} added to favorites!`);
 
-      // Update filtered list to reflect the change
       setFilteredLists((prevLists) =>
         prevLists.map((m) =>
           m.id === movie.id ? { ...m, isFavorite: true } : m
@@ -78,7 +72,6 @@ const Lists = () => {
         })
         .then((response) => {
           if (response.status === 200 || response.status === 204) {
-            // Deletion was successful, update the UI
             setLists((prevLists) => prevLists.filter((movie) => movie.id !== id));
             setFilteredLists((prevLists) => prevLists.filter((movie) => movie.id !== id));
           } else {
@@ -93,14 +86,11 @@ const Lists = () => {
     }
   };
 
-  // Handle edit button click
   const handleEditClick = (movieId) => {
     setEditMessage('You are about to edit this movie. Please wait...');
-
-    // Delay navigation to show message for a moment
     setTimeout(() => {
       navigate('/main/movies/form/' + movieId);
-    }, 1500); // Show the message for 1.5 seconds before navigating
+    }, 1500);
   };
 
   return (
@@ -115,7 +105,6 @@ const Lists = () => {
         </button>
       </div>
 
-      {/* Search Input */}
       <div className='search-container'>
         <input
           type='text'
@@ -126,7 +115,6 @@ const Lists = () => {
         />
       </div>
 
-      {/* Edit Message Display */}
       {editMessage && (
         <div className="edit-message">
           <p>{editMessage}</p>

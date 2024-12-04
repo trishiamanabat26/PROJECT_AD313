@@ -1,87 +1,170 @@
-import { useEffect } from 'react';
-import { useMovieContext } from '../../../../context/MovieContext';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import './View.css';
 
-function View() {
-  const { movie, setMovie } = useMovieContext();
-  const { movieId } = useParams();
+const View = () => {
+  const [movie, setMovie] = useState(null);
+  const [castAndCrew, setCastAndCrew] = useState(null);
+  const [photos, setPhotos] = useState(null);
+  const [videos, setVideos] = useState(null);
+  const [activeTab, setActiveTab] = useState('cast');
   const navigate = useNavigate();
+  const { movieId } = useParams();
+  const BEARER_TOKEN = 'bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYWViMTNmZjdjZDVmNjI1MDA3M2IyZmNkMTQ0NTdlZCIsIm5iZiI6MTczMzI5OTMwMi4yNDQsInN1YiI6IjY3NTAwYzY2MjFlMWVhY2FjNmYwMWNkYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LSSKNU-NMbJBYgIsZmNnaQpyjIyRlTl1tYlL8JB-uJg'; 
 
   useEffect(() => {
     if (movieId) {
-      axios
-        .get(`/movies/${movieId}`)
+      axios.get(`/movies/${movieId}`)
         .then((response) => {
-          console.log(response.data); // Inspect the data here
           setMovie(response.data);
+          fetchCastAndCrew(response.data.tmdbId);
+          fetchPhotos(response.data.tmdbId);
+          fetchVideos(response.data.tmdbId);
         })
         .catch((error) => {
           console.error(error);
           navigate('/');
         });
     }
-  }, [movieId, setMovie, navigate]);
+  }, [movieId, navigate]);
+
+  const fetchCastAndCrew = (tmdbId) => {
+    axios.get(`https://api.themoviedb.org/3/movie/${tmdbId}/credits`, {
+      headers: { Authorization: `Bearer ${BEARER_TOKEN}` },
+    })
+      .then((response) => setCastAndCrew(response.data))
+      .catch((error) => console.error(error));
+  };
+
+  const fetchPhotos = (tmdbId) => {
+    axios.get(`https://api.themoviedb.org/3/movie/${tmdbId}/images`, {
+      headers: { Authorization: `Bearer ${BEARER_TOKEN}` },
+    })
+      .then((response) => setPhotos(response.data))
+      .catch((error) => console.error(error));
+  };
+
+  const fetchVideos = (tmdbId) => {
+    axios.get(`https://api.themoviedb.org/3/movie/${tmdbId}/videos`, {
+      headers: { Authorization: `Bearer ${BEARER_TOKEN}` },
+    })
+      .then((response) => setVideos(response.data))
+      .catch((error) => console.error(error));
+  };
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   return (
     <div className="view-container">
       {movie ? (
         <>
-          {/* Movie Banner */}
-          <div className="movie-banner" style={{ backgroundImage: `url(${movie.bannerImage || ''})` }}>
-            <div className="banner-overlay">
-              <h1 className="movie-title">{movie.title}</h1>
-            </div>
-          </div>
+          <h1>{movie.title}</h1>
+          <img
+            src={`https://image.tmdb.org/t/p/original/${movie.posterPath}`}
+            alt={movie.title}
+            className="movie-poster"
+          />
+          <p>{movie.overview}</p>
 
-          {/* Movie Details */}
-          <div className="movie-details">
-            <h3 className="movie-overview">{movie.overview}</h3>
-          </div>
+          <nav>
+            <ul className="tabs">
+              <li
+                onClick={() => handleTabClick('cast')}
+                className={activeTab === 'cast' ? 'active' : ''}
+              >
+                Cast & Crew
+              </li>
+              <li
+                onClick={() => handleTabClick('photos')}
+                className={activeTab === 'photos' ? 'active' : ''}
+              >
+                Photos
+              </li>
+              <li
+                onClick={() => handleTabClick('videos')}
+                className={activeTab === 'videos' ? 'active' : ''}
+              >
+                Videos
+              </li>
+            </ul>
+          </nav>
 
-          {/* Cast & Crew */}
-          {movie.casts && movie.casts.length > 0 && (
-            <div className="section">
-              <h2>Cast & Crew</h2>
-              <ul className="cast-list">
-                {movie.casts.map((cast, index) => (
-                  <li key={index}>{cast.name}</li>
+          {activeTab === 'cast' && castAndCrew && (
+            <div className="cast-crew-section">
+              <h3>Cast & Crew</h3>
+              <div className="cast-list">
+                {castAndCrew.cast.map((cast) => (
+                  <div className="cast-item" key={cast.id}>
+                    <img
+                      className="cast-image"
+                      src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`}
+                      alt={cast.name}
+                    />
+                    <p>{cast.name} as {cast.character}</p>
+                  </div>
                 ))}
-              </ul>
+                <div className="crew-list">
+                  {castAndCrew.crew.map((crew) => (
+                    <div className="crew-item" key={crew.id}>
+                      <img
+                        className="crew-image"
+                        src={`https://image.tmdb.org/t/p/original/${crew.profile_path}`}
+                        alt={crew.name}
+                      />
+                      <p>{crew.name} - {crew.job}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Videos */}
-          {movie.videos && movie.videos.length > 0 && (
-            <div className="section">
-              <h2>Videos</h2>
-              <div className="video-gallery">
-                {movie.videos.map((video, index) => (
-                  <video key={index} controls>
-                    <source src={video.url} type="video/mp4" />
-                  </video>
+          {activeTab === 'photos' && photos && (
+            <div className="photos-section">
+              <h3>Photos</h3>
+              <div className="photos-container">
+                {photos.backdrops.map((photo) => (
+                  <img
+                    key={photo.file_path}
+                    src={`https://image.tmdb.org/t/p/original/${photo.file_path}`}
+                    alt="photo"
+                    className="photo-image"
+                  />
                 ))}
               </div>
             </div>
           )}
 
-          {/* Photos */}
-          {movie.photos && movie.photos.length > 0 && (
-            <div className="section">
-              <h2>Photos</h2>
-              <div className="photo-gallery">
-                {movie.photos.map((photo, index) => (
-                  <img key={index} src={photo.url} alt={`Movie Photo ${index + 1}`} />
+          {activeTab === 'videos' && videos && (
+            <div className="videos-section">
+              <h3>Videos</h3>
+              <div className="videos-container">
+                {videos.results.map((video) => (
+                  <div key={video.id}>
+                    <h4>{video.name}</h4>
+                    <iframe
+                      width="560"
+                      height="315"
+                      src={`https://www.youtube.com/embed/${video.key}`}
+                      title={video.name}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
                 ))}
               </div>
             </div>
           )}
         </>
       ) : (
-        <p>Loading...</p>
+        <p>Loading movie details...</p>
       )}
     </div>
   );
-}
+};
 
 export default View;

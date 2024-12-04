@@ -1,245 +1,332 @@
-
-body {
-  font-family: 'Arial', sans-serif; 
-  background-color: #121212; 
-  color: #fff; 
+/* General Styles */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  height: 100%; 
-  overflow-y: auto; 
 }
 
-
-h1, h2 {
-  font-family: 'Georgia', serif; 
-  font-weight: bold;
-  color: #83a4c4ef;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-
-.container, .search-container {
-  background: linear-gradient(145deg, #1d1d1d, #2f2f2f); 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
   padding: 20px;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
+/* Container and Layout for Sidebar and Content */
+.container {
+  display: flex;
+  flex: 1;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+}
 
-input, textarea {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #444;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: rgba(8, 100, 153, 0.39);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.sidebar ul li:hover {
+  color: #2980b9;
+}
+
+/* Main Content Area (Outlet) */
+.outlet {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Movie Poster Section */
+.poster-image {
   width: 100%;
-  transition: all 0.3s ease;
+  max-width: 250px; /* Reduced max width for a smaller size */
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 0 auto;
 }
 
-input:focus, textarea:focus {
-  border-color: #ffab00; 
-  outline: none;
-}
-
-button {
-  background-color: #b92815; 
-  color: #121212;
-  border: none;
-  padding: 10px 25px;
-  font-size: 16px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background-color: #ff8f00; 
-  transform: scale(1.05);
-}
-
-button:disabled {
-  background-color: #666; 
-  cursor: not-allowed;
-}
-
-.error-message, .loading-message {
-  background-color: #ff3838; 
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.loading-message {
-  background-color: #0088cc; 
-}
-
-
-.selected {
+/* Cast & Crew, Photos, Videos Section Titles */
+.movie-section-title {
+  font-size: 24px;
   font-weight: bold;
-  color: #ffab00; 
-}
-
-
-.searched-movie p {
-  padding: 10px;
-  margin: 5px;
-  cursor: pointer;
-  background-color: #333;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.searched-movie p:hover {
-  background-color: #444;
-}
-
-
-.pagination {
+  margin-top: 30px;
+  color: #333;
   text-align: center;
+}
+
+/* Cast & Crew, Photos, Videos Containers */
+.cast-crew-container,
+.photos-container,
+.videos-container {
   margin-top: 20px;
 }
 
-.pagination button {
-  padding: 8px 15px;
-  background-color: #222;
-  color: #fff;
-  border-radius: 5px;
-  margin: 0 10px;
-  cursor: pointer;
+/* Cast & Crew Section */
+.cast-crew-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;  /* Make this section scrollable vertically */
+  max-height: 400px;  /* Define a max height for the scrolling area */
+  gap: 10px;
 }
 
-.pagination button:disabled {
-  background-color: #444;
+.cast-card,
+.crew-card {
+  text-align: center;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Movie Poster Style */
-.poster-image {
-  max-width: 200px; 
-  width: 100%; 
-  height: auto; 
-  object-fit: cover; 
+.cast-card img,
+.crew-card img {
+  width: 120px;  /* Set a smaller width for the images */
+  height: 120px; /* Set a fixed height to maintain the aspect ratio */
+  object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); 
-  transition: transform 0.3s ease;
-  margin: 0 auto; 
-  display: block; 
 }
 
-.poster-image:hover {
-  transform: scale(1.05); 
+.cast-info,
+.crew-info {
+  margin-top: 10px;
 }
 
+.cast-card h4,
+.crew-card h4 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
 
-.search-container .searched-movie {
+.cast-card p,
+.crew-card p {
+  font-size: 12px;
+  color: #555;
+}
+
+/* Photos Section */
+.photos-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 }
 
-.search-container .searched-movie p {
-  cursor: pointer;
-  text-align: center;
+.photos-container img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Videos Section */
+.videos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.videos-container iframe {
+  width: 100%;
+  height: 315px;
+  border-radius: 8px;
+}
+
+.videos-container h4 {
   font-size: 16px;
+  margin-bottom: 10px;
 }
 
-@media screen and (max-width: 768px) {
-  .poster-image {
-    max-width: 180px; 
-  }
+/* Form Grid Layout for Cast, Crew, Photos, Videos */
+.create-movie-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
 
+.create-movie-form > .form-field {
+  grid-column: span 2;
+}
+
+hr {
+  margin: 30px 0;
+  border-top: 2px solid #ddd;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
   .container {
-    padding: 10px;
-    margin: 0 5px;
+    flex-direction: column;
+    padding: 15px;
   }
 
-  .search-container {
-    padding: 10px;
-  }
-
-  .search-container input {
-    width: 100%; 
-    margin-bottom: 10px;
-  }
-
-  .search-container button {
+  .sidebar {
     width: 100%;
-    margin-left: 0;
+    margin-bottom: 20px;
   }
 
-  .searched-movie {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+  .outlet {
+    width: 100%;
   }
-}
 
-@media screen and (max-width: 480px) {
   .poster-image {
-    max-width: 150px; 
+    max-width: 100%; /* Allow the poster image to take full width on smaller screens */
   }
 
-  .container {
-    padding: 5px;
+  .create-movie-form {
+    grid-template-columns: 1fr;
   }
 
-  .searched-movie {
-    grid-template-columns: repeat(2, 1fr);
+  .movie-section-title {
+    text-align: center;
   }
 
-  input, textarea, button {
-    font-size: 14px;
-    padding: 8px;
+  .cast-crew-container,
+  .photos-container,
+  .videos-container {
+    display: block;
+    gap: 20px;
   }
 
-  .pagination {
+  .cast-card-container,
+  .crew-card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .pagination button {
-    margin: 5px 0;
-    width: 100%;
+  .videos-container iframe {
+    height: auto;
+    max-height: 315px;
   }
 }
+/* General Styles */
+.container {
+  max-width: 100%;
+  padding: 20px;
+}
 
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+}
 
-.container form {
+.tabs li {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.tabs .active {
+  background-color: #007bff;
+  color: white;
+}
+
+.data-section {
+  max-height: 500px;  /* Adjust height as needed */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Cast & Crew Section */
+.cast-card-container, .crew-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-evenly;
+}
+
+.cast-card, .crew-card {
+  width: 150px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.cast-image, .crew-image {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.cast-info h4, .crew-info h4 {
+  margin: 5px 0;
+}
+
+.cast-info p, .crew-info p {
+  font-size: 12px;
+  color: #555;
+}
+
+/* Photos Section */
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.photo-image {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Videos Section */
+.videos-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative; /* Ensures that child elements can be positioned relative to this container */
+  gap: 20px;
 }
 
-.field {
+.videos-container iframe {
   width: 100%;
-  max-width: 500px;
-  margin-bottom: 15px;
-}
-
-
-.searched-movie {
-  max-height: 300px;
-  overflow-y: auto;
-  display: grid;
-  gap: 10px;
-}
-
-.searched-movie::-webkit-scrollbar {
-  width: 8px;
-}
-
-.searched-movie::-webkit-scrollbar-track {
-  background: #333;
-}
-
-.searched-movie::-webkit-scrollbar-thumb {
-  background-color: #ffab00;
-  border-radius: 4px;
-}
-
-body {
-  overflow-y: scroll; 
-  height: 100vh; 
+  max-width: 560px;
+  height: 315px;
+  margin: 10px 0;
 }

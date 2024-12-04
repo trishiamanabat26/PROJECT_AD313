@@ -1,4 +1,3 @@
-/* Main Layout Styles */
 .Main {
   display: flex;
   overflow: hidden;
@@ -11,29 +10,29 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
-  background-color: #121212; /* Dark background for cinematic effect */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Soft outer shadow */
+  background-color: #121212;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
   border-radius: 10px;
 }
 
 .Main .container .outlet {
-  flex-grow: 1; /* Adjusted for consistent layout */
+  flex-grow: 1;
   padding: 1rem;
   overflow-y: auto;
-  background: #1f1f1f; /* Slightly lighter background for the content area */
-  color: #d3d3d3; /* Light gray text for better readability */
+  background: #1f1f1f;
+  color: #d3d3d3;
   border-radius: 0 0 10px 10px;
 }
 
 .Main .container .navigation {
   height: 80px;
-  background-color: #1c1f23; /* Deep dark background for the nav bar */
+  background-color: #1c1f23;
   width: 100%;
   display: flex;
-  justify-content: space-between; /* Allows dynamic space between elements */
+  justify-content: space-between;
   align-items: center;
   padding: 0 40px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Soft shadow under nav */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   border-radius: 10px 10px 0 0;
 }
 
@@ -45,32 +44,32 @@
 }
 
 .Main .container .navigation ul li {
-  padding: 0 30px; /* Adjusted padding for better alignment */
+  padding: 0 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #61dafb; /* Cinematic blue */
+  color: #61dafb;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .Main .container .navigation ul li a {
   text-decoration: none;
-  color: inherit; /* Inherit color from parent li */
+  color: inherit;
 }
 
 .Main .container .navigation ul li.active a,
 .Main .container .navigation ul li:hover a {
   text-decoration: none;
-  color: #ffab00; /* Gold color for active and hover state */
+  color: #ffab00;
 }
 
 .Main .container .navigation ul li.active,
 .Main .container .navigation ul li:hover {
-  background: #353a43; /* Hover effect background */
-  transform: translateY(-2px); /* Slight hover lift effect */
+  background: #353a43;
+  transform: translateY(-2px);
 }
 
 .Main .container .navigation ul li.logout,
@@ -80,30 +79,28 @@
   font-size: 14px;
   padding: 0 15px;
   border-radius: 5px;
-  background-color: #ffab00; /* Gold button for login/logout */
+  background-color: #ffab00;
   color: #121212;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .Main .container .navigation ul li.logout:hover,
 .Main .container .navigation ul li.login:hover {
-  background-color: #ff8f00; /* Darker gold on hover */
-  transform: scale(1.05); /* Hover effect to make button feel interactive */
+  background-color: #ff8f00;
+  transform: scale(1.05);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .Main .container .navigation {
-    padding: 0 20px; /* Adjust navigation padding on smaller screens */
+    padding: 0 20px;
   }
-  
+
   .Main .container .navigation ul li {
-    padding: 0 15px; /* Adjust padding on smaller screens */
-    font-size: 14px; /* Slightly smaller font size for mobile */
+    padding: 0 15px;
+    font-size: 14px;
   }
 }
 
-/* Smooth Scroll for Content */
 .Main .container .outlet {
   scrollbar-width: thin;
   scrollbar-color: #ffab00 #121212;
