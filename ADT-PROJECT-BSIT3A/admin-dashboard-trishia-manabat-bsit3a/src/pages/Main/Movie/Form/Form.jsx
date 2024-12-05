@@ -280,25 +280,28 @@ const Form = () => {
                         src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`}
                         alt={cast.name}
                       />
-                      <div className='cast-info'>
-                        <h4>{cast.name}</h4>
-                        <p>{cast.character}</p>
-                      </div>
+                      <p>{cast.name}</p>
                     </div>
                   ))}
                 </div>
-                <div className='crew-card-container'>
-                  {castAndCrew.crew.map((crew) => (
-                    <div className='crew-card' key={crew.id}>
-                      <img
-                        className='crew-image'
-                        src={`https://image.tmdb.org/t/p/original/${crew.profile_path}`}
-                        alt={crew.name}
-                      />
-                      <div className='crew-info'>
-                        <h4>{crew.name}</h4>
-                        <p>{crew.job}</p>
-                      </div>
+              </div>
+            )}
+
+            {activeTab === 'videos' && videos && (
+              <div>
+                <h3>Videos</h3>
+                <div className='videos-container'>
+                  {videos.results.map((video) => (
+                    <div className='video-item' key={video.id}>
+                      <h4>{video.name}</h4>
+                      <iframe
+                        width='560'
+                        height='315'
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        title={video.name}
+                        frameBorder='0'
+                        allowFullScreen
+                      ></iframe>
                     </div>
                   ))}
                 </div>
@@ -310,30 +313,12 @@ const Form = () => {
                 <h3>Photos</h3>
                 <div className='photos-container'>
                   {photos.backdrops.map((photo) => (
-                    <img
-                      key={photo.file_path}
-                      src={`https://image.tmdb.org/t/p/original/${photo.file_path}`}
-                      alt='photo'
-                      className='photo-image'
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'videos' && videos && (
-              <div>
-                <h3>Videos</h3>
-                <div className='videos-container'>
-                  {videos.results.map((video) => (
-                    <div key={video.id}>
-                      <h4>{video.name}</h4>
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${video.key}`}
-                        title={video.name}
-                      ></iframe>
+                    <div className='photo-item' key={photo.file_path}>
+                      <img
+                        className='photo-image'
+                        src={`https://image.tmdb.org/t/p/original/${photo.file_path}`}
+                        alt='Movie Photo'
+                      />
                     </div>
                   ))}
                 </div>
@@ -343,6 +328,7 @@ const Form = () => {
         </div>
       )}
 
+      <hr />
       <Outlet />
     </>
   );

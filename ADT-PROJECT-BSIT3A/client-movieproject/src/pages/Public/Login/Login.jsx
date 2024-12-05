@@ -3,7 +3,7 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import axios from 'axios';
-
+import strangerImage from './stranger.png';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

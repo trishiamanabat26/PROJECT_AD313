@@ -6,7 +6,7 @@ import View from './pages/Main/Movie/View/View';
 import Login from './pages/Public/Login/Login';
 import Register from './pages/Public/Register/Register';
 import MovieContextProvider from './context/MovieContext';
-import cinemaImage from './pages/Public/Login/cinema.jpg'; // Adjust path as necessary
+import strangerImage from './pages/Public/Login/stranger.png'; // Adjust path as necessary
 
 
 const router = createBrowserRouter([

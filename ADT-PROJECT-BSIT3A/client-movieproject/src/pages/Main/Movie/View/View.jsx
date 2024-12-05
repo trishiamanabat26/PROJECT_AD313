@@ -9,6 +9,7 @@ const View = () => {
   const [photos, setPhotos] = useState(null);
   const [videos, setVideos] = useState(null);
   const [activeTab, setActiveTab] = useState('cast');
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0); 
   const navigate = useNavigate();
   const { movieId } = useParams();
   const BEARER_TOKEN = 'bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYWViMTNmZjdjZDVmNjI1MDA3M2IyZmNkMTQ0NTdlZCIsIm5iZiI6MTczMzI5OTMwMi4yNDQsInN1YiI6IjY3NTAwYzY2MjFlMWVhY2FjNmYwMWNkYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LSSKNU-NMbJBYgIsZmNnaQpyjIyRlTl1tYlL8JB-uJg'; 
@@ -49,7 +50,21 @@ const View = () => {
     axios.get(`https://api.themoviedb.org/3/movie/${tmdbId}/videos`, {
       headers: { Authorization: `Bearer ${BEARER_TOKEN}` },
     })
-      .then((response) => setVideos(response.data))
+      .then((response) => {
+        // Prioritize the official trailer (if it exists)
+        const officialTrailer = response.data.results.filter(video => video.type === 'Trailer' && video.name.toLowerCase().includes('official'));
+        const otherVideos = response.data.results.filter(video => video.type === 'Trailer' && !video.name.toLowerCase().includes('official'));
+        
+        // Set the official trailer first and then the other videos
+        setVideos({
+          results: [...officialTrailer, ...otherVideos],
+        });
+
+        // Set the current video index to the official trailer, if available
+        if (officialTrailer.length > 0) {
+          setCurrentVideoIndex(0);
+        }
+      })
       .catch((error) => console.error(error));
   };
 
@@ -57,8 +72,31 @@ const View = () => {
     setActiveTab(tab);
   };
 
+  const handleBackClick = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
+  // Automatically switch video every 10 seconds
+  useEffect(() => {
+    if (videos && videos.results.length > 0) {
+      const videoInterval = setInterval(() => {
+        setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.results.length);
+      }, 10000); // Switch video every 10 seconds
+
+      return () => clearInterval(videoInterval); // Clean up interval on component unmount
+    }
+  }, [videos]);
+
   return (
     <div className="view-container">
+      <nav>
+        <ul className="nav-buttons">
+          <li>
+            <button className="back-button" onClick={handleBackClick}>← Back</button>
+          </li>
+        </ul>
+      </nav>
+
       {movie ? (
         <>
           <h1>{movie.title}</h1>
@@ -106,18 +144,18 @@ const View = () => {
                     <p>{cast.name} as {cast.character}</p>
                   </div>
                 ))}
-                <div className="crew-list">
-                  {castAndCrew.crew.map((crew) => (
-                    <div className="crew-item" key={crew.id}>
-                      <img
-                        className="crew-image"
-                        src={`https://image.tmdb.org/t/p/original/${crew.profile_path}`}
-                        alt={crew.name}
-                      />
-                      <p>{crew.name} - {crew.job}</p>
-                    </div>
-                  ))}
-                </div>
+              </div>
+              <div className="crew-list">
+                {castAndCrew.crew.map((crew) => (
+                  <div className="crew-item" key={crew.id}>
+                    <img
+                      className="crew-image"
+                      src={`https://image.tmdb.org/t/p/original/${crew.profile_path}`}
+                      alt={crew.name}
+                    />
+                    <p>{crew.name} - {crew.job}</p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -142,20 +180,39 @@ const View = () => {
             <div className="videos-section">
               <h3>Videos</h3>
               <div className="videos-container">
-                {videos.results.map((video) => (
-                  <div key={video.id}>
-                    <h4>{video.name}</h4>
+                {/* Official trailer plays automatically */}
+                {videos.results.length > 0 && (
+                  <div>
+                    <h4>{videos.results[currentVideoIndex].name}</h4>
                     <iframe
                       width="560"
                       height="315"
-                      src={`https://www.youtube.com/embed/${video.key}`}
-                      title={video.name}
+                      src={`https://www.youtube.com/embed/${videos.results[currentVideoIndex].key}?autoplay=1`}
+                      title={videos.results[currentVideoIndex].name}
                       frameBorder="0"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>
                   </div>
-                ))}
+                )}
+
+                {/* Display all other videos below */}
+                <div className="other-videos">
+                  {videos.results.slice(1).map((video, index) => (
+                    <div key={video.key} className="video-item">
+                      <h5>{video.name}</h5>
+                      <iframe
+                        width="560"
+                        height="315"
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        title={video.name}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
