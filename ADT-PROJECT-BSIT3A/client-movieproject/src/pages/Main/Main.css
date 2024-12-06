@@ -63,12 +63,12 @@
 .Main .container .navigation ul li.active a,
 .Main .container .navigation ul li:hover a {
   text-decoration: none;
-  color: #ffab00;
+  color: #559dce;
 }
 
 .Main .container .navigation ul li.active,
 .Main .container .navigation ul li:hover {
-  background: #353a43;
+  background: #122547;
   transform: translateY(-2px);
 }
 
@@ -79,14 +79,14 @@
   font-size: 14px;
   padding: 0 15px;
   border-radius: 5px;
-  background-color: #ffab00;
+  background-color: #2bd4cc;
   color: #121212;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .Main .container .navigation ul li.logout:hover,
 .Main .container .navigation ul li.login:hover {
-  background-color: #ff8f00;
+  background-color: #173e86;
   transform: scale(1.05);
 }
 
@@ -103,7 +103,7 @@
 
 .Main .container .outlet {
   scrollbar-width: thin;
-  scrollbar-color: #ffab00 #121212;
+  scrollbar-color: #5cbecff5 #121212;
 }
 
 .Main .container .outlet::-webkit-scrollbar {
@@ -111,7 +111,7 @@
 }
 
 .Main .container .outlet::-webkit-scrollbar-thumb {
-  background-color: #ffab00;
+  background-color: #23719e;
   border-radius: 5px;
 }
 

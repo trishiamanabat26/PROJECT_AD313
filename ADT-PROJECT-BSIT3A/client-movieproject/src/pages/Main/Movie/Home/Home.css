@@ -1,110 +1,168 @@
-/* Page Title */
+/* Home.css */
+
+/* Container for the entire page */
+.main-containerr {
+  padding: 20px;
+  background: linear-gradient(135deg, #5ad4b6, #7390a7); /* Gradient background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto; /* Allow content to extend beyond the viewport */
+  min-height: 100vh; /* Ensure the page fills at least the full viewport height */
+  color: #fff; /* White text for contrast */
+  overflow-y: auto; /* Allow vertical scrolling */
+  max-width: 100%; /* Ensure content width is within the viewport */
+}
+
+/* Page title */
 .page-title {
-  font-size: 5rem; /* Larger title for cinematic impact */
-  margin: 3rem 0;
+  font-size: 2rem;
+  font-weight: bold;
   text-align: center;
-  color: #ffab00; /* Gold color for dramatic effect */
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); /* Slight shadow for text depth */
-  font-family: 'Georgia', serif; /* Elegant font for cinematic feel */
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add subtle shadow for readability */
 }
 
-/* Featured List Container */
-.featured-list-container {
+/* Styling for the search box */
+.search-box {
   width: 100%;
-  height: 80vh; /* Increased height for a more immersive cinematic effect */
-  margin-bottom: 5rem;
-  position: relative;
-  overflow: hidden; /* Ensures everything stays within the bounds */
-  border-radius: 10px; /* Rounded corners for a soft cinematic look */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); /* Add deep shadow for emphasis */
-  margin-top: 5rem; /* Adds spacing above the featured section */
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+  color: #333; /* Dark text color */
 }
 
-/* Featured Backdrop */
-.featured-backdrop {
+.search-box:focus {
+  border-color: #ffeb3b; /* Highlight border on focus */
+  background: rgba(255, 255, 255, 1); /* Solid background on focus */
+}
+
+/* Featured movie section */
+.featured-list-container {
+  margin-bottom: 30px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1100px;
+  transition: transform 0.3s ease;
+}
+
+.featured-list-container:hover {
+  transform: scale(1.02); /* Add interactive hover effect */
+}
+
+.trailer-container h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add subtle shadow */
+}
+
+/* Adjust video iframe to make it more prominent */
+.trailer-video {
+  position: relative;
+  padding-top: 56.25%; /* Aspect ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.trailer-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-size: cover !important; /* Ensures the image covers the full container */
-  background-position: center center; /* Centers the image for best visual */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0 1rem;
-  position: relative;
-  filter: brightness(0.5); /* Slight darkening for a moody cinematic effect */
-  border-radius: 10px;
-  transition: filter 0.3s ease-in-out; /* Smooth filter transition */
-}
-
-.featured-backdrop:hover {
-  filter: brightness(0.7); /* Slightly brighten on hover */
-}
-
-/* Featured Movie Title */
-.featured-movie-title {
-  font-weight: bold;
-  font-size: 5rem; /* Increased font size for better visibility */
-  color: rgb(255, 243, 243);
-  width: 100%;
-  padding: 1.5rem;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for contrast */
-  text-align: center;
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  text-transform: uppercase; /* For a more impactful cinematic title */
-  letter-spacing: 2px; /* Spacing for added drama */
-  font-family: 'Arial', sans-serif; /* A more modern font for the movie title */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Adding depth with subtle shadows */
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Adds more contrast for readability */
-}
-
-/* Movie Poster Styling */
-.movie-poster {
-  width: 140px; /* Increased size for better visibility */
-  height: 210px;
-  object-fit: cover;
   border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Soft shadow around posters */
-  margin: 0.5rem;
 }
 
-.movie-poster:hover {
-  transform: scale(1.1); /* Slight zoom effect for better interactivity */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8); /* Deep shadow on hover for emphasis */
+/* Movie title container */
+.movie-title-container {
+  margin-top: 15px;
+  text-align: center;
 }
 
-/* List Container */
-.list-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  padding: 0 1rem;
-  margin-top: 3rem; /* Added top margin for spacing */
-  overflow-x: auto; /* Horizontal scrolling */
-  padding-bottom: 1rem;
-  max-height: 500px;
+.featured-movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4); /* Shadow for better contrast */
 }
 
-/* Smooth Scroll Effect for Lists */
-.list-container {
-  scrollbar-width: thin;
-  scrollbar-color: #ffab00 #121212;
-}
-
-.list-container::-webkit-scrollbar {
-  height: 8px; /* Vertical scrollbar styling */
-}
-
-.list-container::-webkit-scrollbar-thumb {
-  background-color: #ffab00;
+/* Buttons for navigation */
+.next-trailer-button,
+.next-button {
+  background-color: #16868181;
+  color: #333;
+  padding: 12px 24px;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
 }
 
-.list-container::-webkit-scrollbar-track {
-  background-color: #121212;
+.next-trailer-button:hover,
+.next-button:hover {
+  background-color: #0e7279; /* Change to a different color on hover */
+  transform: scale(1.05); /* Add interactive hover effect */
 }
+
+/* Movie list container */
+.list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Movie cards styling */
+.MovieCards {
+  background-color: rgba(15, 92, 122, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(17, 139, 113, 0.479);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.MovieCards:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(27, 133, 83, 0.3); /* Enhance shadow on hover */
+}
+
+/* Loader */
+.featured-list-container-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff7e5f; /* Color match with gradient */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+

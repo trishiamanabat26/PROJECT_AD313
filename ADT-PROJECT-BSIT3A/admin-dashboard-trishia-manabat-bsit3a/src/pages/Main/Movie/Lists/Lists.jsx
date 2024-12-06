@@ -87,7 +87,7 @@ const Lists = () => {
   };
 
   const handleEditClick = (movieId) => {
-    setEditMessage('You are about to edit this movie. Please wait...');
+    setEditMessage('You are about to view this movie. Please wait...');
     setTimeout(() => {
       navigate('/main/movies/form/' + movieId);
     }, 1500);
@@ -142,7 +142,7 @@ const Lists = () => {
                       onClick={() => handleEditClick(movie.id)}
                       className='edit-button'
                     >
-                      Edit
+                      View
                     </button>
                     <button
                       type='button'

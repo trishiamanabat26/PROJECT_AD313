@@ -10,8 +10,11 @@ const Home = () => {
   const [featuredMovie, setFeaturedMovie] = useState(null);
   const [videos, setVideos] = useState(null);
   const { movieList, setMovieList, setMovie } = useMovieContext();
-  
-  const BEARER_TOKEN = 'bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYWViMTNmZjdjZDVmNjI1MDA3M2IyZmNkMTQ0NTdlZCIsIm5iZiI6MTczMzI5OTMwMi4yNDQsInN1YiI6IjY3NTAwYzY2MjFlMWVhY2FjNmYwMWNkYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LSSKNU-NMbJBYgIsZmNnaQpyjIyRlTl1tYlL8JB-uJg';
+  const [videoDuration, setVideoDuration] = useState(15);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const BEARER_TOKEN = 'your-bearer-token-here';
 
   const getMovies = () => {
     axios
@@ -20,7 +23,7 @@ const Home = () => {
         setMovieList(response.data);
         const random = Math.floor(Math.random() * response.data.length);
         setFeaturedMovie(response.data[random]);
-        fetchVideos(response.data[random].tmdbId); // Fetch the video for the first movie
+        fetchVideos(response.data[random].tmdbId);
       })
       .catch((e) => console.log(e));
   };
@@ -29,8 +32,30 @@ const Home = () => {
     axios.get(`https://api.themoviedb.org/3/movie/${tmdbId}/videos`, {
       headers: { Authorization: `${BEARER_TOKEN}` },
     })
-      .then((response) => setVideos(response.data))
+      .then((response) => {
+        const officialTrailer = response.data.results.filter(video => video.type === 'Trailer' && video.name.includes('Official'));
+        setVideos(officialTrailer.length > 0 ? officialTrailer : response.data.results);
+      })
       .catch((error) => console.error(error));
+  };
+
+  const handleNextMovie = () => {
+    if (movieList.length) {
+      const random = Math.floor(Math.random() * movieList.length);
+      setFeaturedMovie(movieList[random]);
+      fetchVideos(movieList[random].tmdbId);
+      setCurrentVideoIndex(0);
+      setVideoDuration(20);
+    } else {
+      console.log("Movie list is empty or not loaded.");
+    }
+  };
+
+  const handleNextTrailer = () => {
+    if (videos && videos.length > 1) {
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
+      setVideoDuration(20);
+    }
   };
 
   useEffect(() => {
@@ -39,73 +64,81 @@ const Home = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (movieList.length) {
-        const random = Math.floor(Math.random() * movieList.length);
-        setFeaturedMovie(movieList[random]);
-        fetchVideos(movieList[random].tmdbId); // Fetch video when the featured movie changes
-      }
-    }, 15000); // Change every 15 seconds
+      setVideoDuration(prev => (prev > 0 ? prev - 1 : 20));
+    }, 1000);
+    
     return () => clearInterval(interval);
-  }, [movieList]);
+  }, [currentVideoIndex]);
+
+  useEffect(() => {
+    if (videoDuration === 0) {
+      handleNextMovie();
+    }
+  }, [videoDuration]);
+
+  const filteredMovies = movieList.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className='main-containerr'>
       <h1 className='page-title'>Preview Movies</h1>
-      
+      <input
+        type="text"
+        placeholder="Search movies..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-box"
+      />
       {featuredMovie && movieList.length ? (
         <div className='featured-list-container'>
-          <div
-            className='featured-backdrop'
-            style={{
-              background: `url(${
-                featuredMovie.backdropPath !==
-                'https://image.tmdb.org/t/p/original/undefined'
-                  ? featuredMovie.backdropPath
-                  : featuredMovie.posterPath
-              }) no-repeat center center / cover`,
-            }}
-          >
-            <span className='featured-movie-title'>{featuredMovie.title}</span>
-          </div>
-
-          {/* Video Section */}
-          {videos && videos.results.length > 0 && (
-            <div className="videos-section">
-              <h3>Videos</h3>
-              <div className="videos-container">
-                {videos.results.map((video) => (
-                  <div key={video.id}>
-                    <h4>{video.name}</h4>
-                    <iframe
-                      width="560"
-                      height="315"
-                      src={`https://www.youtube.com/embed/${video.key}`}
-                      title={video.name}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                ))}
+          {videos && videos.length > 0 && (
+            <div className="trailer-container">
+              <h3>Watch Official Trailer</h3>
+              <div className="trailer-video">
+                <iframe
+                  width="100%"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${videos[currentVideoIndex].key}?autoplay=1`}
+                  title={videos[currentVideoIndex].name}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                <div className="overlay">
+                  <button
+                    onClick={() => navigate(`/main/view/${featuredMovie.id}`)}
+                    className="watch-now-button"
+                  >
+                    Watch Now
+                  </button>
+                </div>
               </div>
             </div>
           )}
+          <div className="movie-title-container">
+            <span className='featured-movie-title'>{featuredMovie.title}</span>
+          </div>
+          <button onClick={handleNextTrailer} className="next-trailer-button">
+            Next Trailer
+          </button>
+          <button onClick={handleNextMovie} className="next-button">
+            Next Movie
+          </button>
         </div>
       ) : (
         <div className="featured-list-container-loader">
           <div className="spinner"></div>
         </div>
       )}
-
-      {/* Movie List */}
       <div className="list-container">
-        {movieList.map((movie) => (
+        {filteredMovies.map((movie) => (
           <MovieCards
             key={movie.id}
             movie={movie}
             onClick={() => {
-              navigate(`/main/view/${movie.id}`); // Navigate to movie detail page
-              setMovie(movie); // Set selected movie in context
+              navigate(`/main/view/${movie.id}`);
+              setMovie(movie);
             }}
           />
         ))}
